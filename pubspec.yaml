@@ -43,6 +43,8 @@ dependencies:
   carousel_slider: ^4.2.1
   flutter_svg_provider: ^1.0.3
   expansion_tile_card: ^2.0.0
+  firebase_core: ^2.8.0
+  firebase_auth: ^4.3.0
 
 dev_dependencies:
   flutter_test:
