@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakan/core/utils/colors/colors.dart';
+import 'package:sakan/core/utils/widgets/txt_style.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hint;
   final TextEditingController? controller;
   final int width;
-  final bool isPhone;
+  final bool isNumbers, isPhone, isPass;
   final VoidCallback? onTap;
 
   final FormFieldValidator<String> validator;
@@ -15,6 +16,8 @@ class CustomTextField extends StatelessWidget {
     required this.hint,
     required this.controller,
     required this.validator,
+    this.isNumbers = false,
+    this.isPass = false,
     this.isPhone = false,
     this.onTap,
     this.width = 327,
@@ -27,8 +30,9 @@ class CustomTextField extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Center(
         child: TextFormField(
+          obscureText: isPass,
           keyboardType:
-              isPhone == true ? TextInputType.number : TextInputType.text,
+              isNumbers == true ? TextInputType.number : TextInputType.text,
           // inputFormatters: [
           //   LengthLimitingTextInputFormatter(14),
           // ],
@@ -41,15 +45,20 @@ class CustomTextField extends StatelessWidget {
               fontSize: 13.sp,
               fontWeight: FontWeight.bold),
           decoration: InputDecoration(
-            // suffixIcon: isNote
-            //     ? GestureDetector(
-            //         onTap: onTap,
-            //         child: const Icon(
-            //           Icons.clear,
-            //           color: Colors.red,
-            //         ))
-            //     : null,
-            fillColor: secondaryGrey,
+            suffixIcon: isPhone
+                ? Container(
+                    child: Padding(
+                      padding: EdgeInsets.all(8),
+                      child: TxtStyle(
+                        "09 218+",
+                        13,
+                        Colors.black,
+                        FontWeight.bold,
+                      ),
+                    ),
+                  )
+                : null,
+            fillColor: softGrey,
             filled: true,
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15.r),
@@ -64,7 +73,7 @@ class CustomTextField extends StatelessWidget {
                 height: 0,
                 fontFamily: 'Changa',
                 color: Colors.red,
-                fontSize: 12.sp,
+                fontSize: 9.sp,
                 fontWeight: FontWeight.bold),
             focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15.r),

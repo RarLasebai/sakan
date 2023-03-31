@@ -43,7 +43,7 @@ class EditPersonalDataScreen extends StatelessWidget {
                   const TxtStyle("رقم الهاتف", 14, darkGrey, FontWeight.normal),
                   CustomTextField(
                       hint: "رقم الهاتف",
-                      isPhone: true,
+                      isNumbers: true,
                       controller: phoneController,
                       validator: (val) {
                         return null;
@@ -79,10 +79,10 @@ class EditPersonalDataScreen extends StatelessWidget {
                       children: [
                         const TxtStyle("الحالة الإجتماعية", 12, darkGrey,
                             FontWeight.normal),
-                        CustomRadioButton(
-                            groupValue: groupValue, title: "أعزب"),
-                        CustomRadioButton(
-                            groupValue: groupValue, title: "متزوج"),
+                      //   CustomRadioButton(
+                      //       groupValue: groupValue, title: "أعزب"),
+                      //   CustomRadioButton(
+                      //       groupValue: groupValue, title: "متزوج"),
                       ]),
                   SizedBox(height: 10.h),
                   CustomButton(text: "حفظ", onTap: () {}),
