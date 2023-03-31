@@ -11,7 +11,6 @@ import 'package:sakan/core/utils/widgets/show_snack_bar.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 import 'package:sakan/features/auth/application/login_cubit/login_cubit.dart';
 import 'package:sakan/features/auth/application/login_cubit/login_states.dart';
-import 'package:sakan/features/auth/data/model/user_model.dart';
 import 'package:sakan/features/auth/presentation/screens/restore_password_screen.dart';
 import 'package:sakan/features/auth/presentation/screens/sign_up_one_screen.dart';
 

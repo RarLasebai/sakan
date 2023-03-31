@@ -12,7 +12,7 @@ class AuthSuccessState extends   AuthStates{
   AuthSuccessState(this.userModel);
 }
  
- class AuthFailState extends   AuthStates{}
+class AuthFailState extends   AuthStates{}
 
 class AuthErrorState implements  AuthStates {
   final String message;

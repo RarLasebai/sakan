@@ -85,7 +85,10 @@ class ChangePasswordScreen extends StatelessWidget {
                   ),
                   BlocConsumer<ForgetPassCubit, ForgetPassStates>(
                       listener: (context, state) {
+                    ForgetPassCubit forgetPassCubit =
+                        ForgetPassCubit.get(context);
                     if (state is PasswordChangedSuccessState) {
+                      forgetPassCubit.setSignin();
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(

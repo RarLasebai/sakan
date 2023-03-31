@@ -17,15 +17,14 @@ class ForgetPassCodeSentState extends ForgetPassStates {
   final UserModel user;
   ForgetPassCodeSentState({required this.verId, required this.user});
 }
+
 //UserNotFound on the firestore = ForgetPassUserNotFoundState
 class ForgetPassUserNotFoundState extends ForgetPassStates {}
 
 //user phone is exist and he entered a true otp = ForgetPassVerifiedState
 class ForgetPassVerifiedState extends ForgetPassStates {}
 
-class PasswordChangedSuccessState extends ForgetPassStates {
-  // final UserModel userModel;
-}
+class PasswordChangedSuccessState extends ForgetPassStates {}
 
 class ForgetPassFailState extends ForgetPassStates {}
 

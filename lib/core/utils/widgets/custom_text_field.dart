@@ -46,17 +46,15 @@ class CustomTextField extends StatelessWidget {
               fontWeight: FontWeight.bold),
           decoration: InputDecoration(
             suffixIcon: isPhone
-                ? Container(
-                    child: Padding(
-                      padding: EdgeInsets.all(8),
-                      child: TxtStyle(
-                        "09 218+",
-                        13,
-                        Colors.black,
-                        FontWeight.bold,
-                      ),
-                    ),
-                  )
+                ? const Padding(
+                  padding: EdgeInsets.all(8),
+                  child: TxtStyle(
+                    "09 218+",
+                    13,
+                    Colors.black,
+                    FontWeight.bold,
+                  ),
+                )
                 : null,
             fillColor: softGrey,
             filled: true,

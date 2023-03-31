@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:sakan/core/utils/colors/colors.dart';
-import 'package:sakan/core/utils/screens/home_layout.dart';
 import 'package:sakan/core/utils/widgets/custom_button.dart';
 import 'package:sakan/core/utils/widgets/loading_widget.dart';
 import 'package:sakan/core/utils/widgets/show_snack_bar.dart';
