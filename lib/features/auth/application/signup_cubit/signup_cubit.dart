@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,7 +24,6 @@ class SignupCubit extends Cubit<SignupStates> {
   //Variables
   TextEditingController addressController = TextEditingController();
   TextEditingController nationalityController = TextEditingController();
-
   TextEditingController otpController = TextEditingController();
   GlobalKey<FormState> otpFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> signUpTwoFormKey = GlobalKey<FormState>();
@@ -34,6 +35,7 @@ class SignupCubit extends Cubit<SignupStates> {
 
   //Functions
   onChanged( value) {
+    //this one is for the radio button
     // groupValue = value;
     print(groupValue);
     // emit(RadioButtonChangeState(value));

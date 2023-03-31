@@ -49,10 +49,10 @@ class SplashScreen extends StatelessWidget {
               SizedBox(
                 height: 100.h,
               ),
-               SizedBox(
+               const SizedBox(
               height: 100,
             ),
-            SpinKitWanderingCubes(
+            const SpinKitWanderingCubes(
               color: Colors.white,
               size: 50,
             ),

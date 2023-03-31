@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,7 +9,6 @@ import 'package:sakan/core/utils/widgets/loading_widget.dart';
 import 'package:sakan/core/utils/widgets/show_snack_bar.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 import 'package:sakan/features/auth/application/forget_pass_cubit/foget_pass_states.dart';
-import 'package:sakan/features/auth/presentation/screens/otp_verfication_screen.dart';
 import 'package:sakan/features/auth/presentation/screens/restore_pass_otp_screen.dart';
 
 import '../../application/forget_pass_cubit/forget_pass_cubit.dart';

@@ -1,18 +1,26 @@
+// ignore_for_file: avoid_print
+
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sakan/features/auth/application/forget_pass_cubit/foget_pass_states.dart';
 import 'package:sakan/features/auth/data/model/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ForgetPassCubit extends Cubit<ForgetPassStates> {
   ForgetPassCubit() : super(ForgetPassInitialState());
 
   static ForgetPassCubit get(context) => BlocProvider.of(context);
 
-  UserModel? userModel;
 //Firebase instance
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
+
+  UserModel? userModel;
+
+//Functions
 
   //1- check if phone is stored in firestore
   Future checkPhoneExist(String phone) async {
@@ -55,7 +63,6 @@ class ForgetPassCubit extends Cubit<ForgetPassStates> {
     }
   }
   //2- verify with otp
-  //verfiy OTP
 
   void verfiyOtp({
     required String otp,
@@ -70,8 +77,6 @@ class ForgetPassCubit extends Cubit<ForgetPassStates> {
 
       if (user != null) {
         print("uuser verified");
-        // userId = user.uid;
-        // onSuccess(userId: userId);
       }
       emit(ForgetPassVerifiedState());
     } on FirebaseAuthException catch (e) {
@@ -88,11 +93,27 @@ class ForgetPassCubit extends Cubit<ForgetPassStates> {
           .collection("users")
           .doc(userModel.userId)
           .update({"userPassword": pass});
+      storeDataLocally(userModel);
       emit(PasswordChangedSuccessState());
     } catch (e) {
       emit(ForgetPassErrorState(e.toString()));
     }
   }
+
   //4- login and save login
+  //store data locally
+  Future storeDataLocally(UserModel userModel) async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    await sharedPreferences.setString(
+        "user_model", jsonEncode(userModel.toMap()));
+  }
+
+  
+  Future setSignin() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    sharedPreferences.setBool("is_signed_in", true);
+  }
 
 }

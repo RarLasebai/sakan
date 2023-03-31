@@ -1,7 +1,7 @@
-import 'dart:convert';
+// ignore_for_file: avoid_print
 
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sakan/features/auth/application/login_cubit/login_states.dart';
 import 'package:sakan/features/auth/data/model/user_model.dart';
@@ -14,6 +14,8 @@ class LoginCubit extends Cubit<LoginStates> {
 
   //Firebase instance
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  //Functions
   Future login({required String phone, required String pass}) async {
     emit(LoginLoadingState());
 
@@ -30,7 +32,7 @@ class LoginCubit extends Cubit<LoginStates> {
           UserModel user = UserModel.fromMap(data);
           setSignin();
           emit(LoginSuccessState(user));
-//then set shared pref
+        //then set shared pref
           try {
             storeDataLocally(user);
             print("saved");

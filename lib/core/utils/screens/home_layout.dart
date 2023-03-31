@@ -26,13 +26,15 @@ class HomeLayout extends StatelessWidget {
             return Directionality(
               textDirection: TextDirection.rtl,
               child: Scaffold(
-                floatingActionButton: FloatingActionButton(onPressed: () {
+                floatingActionButton: FloatingActionButton(
+                  child: const Icon(Icons.logout_outlined),
+                  onPressed: () {
                   appCubit
                       .signOut()
                       .then((value) => Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SplashScreen()),
+                                builder: (context) => const SplashScreen()),
                             (Route<dynamic> route) => false,
                           ));
                 }),

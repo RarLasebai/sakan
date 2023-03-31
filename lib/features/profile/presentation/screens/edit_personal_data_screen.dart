@@ -5,7 +5,6 @@ import 'package:sakan/core/utils/widgets/custom_button.dart';
 import 'package:sakan/core/utils/widgets/custom_text_field.dart';
 import 'package:sakan/core/utils/widgets/top_nav_bar.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
-import 'package:sakan/features/auth/presentation/widgets/radio_button_widget.dart';
 
 class EditPersonalDataScreen extends StatelessWidget {
   const EditPersonalDataScreen({super.key});
@@ -17,7 +16,7 @@ class EditPersonalDataScreen extends StatelessWidget {
     TextEditingController personalProofController = TextEditingController();
     TextEditingController cityController = TextEditingController();
     TextEditingController nationalityController = TextEditingController();
-    String groupValue = "أعزب";
+    // String groupValue = "أعزب";
 
     // GlobalKey<FormState> signUpOneFormKey = GlobalKey<FormState>();
 
@@ -76,8 +75,8 @@ class EditPersonalDataScreen extends StatelessWidget {
                   SizedBox(height: 10.h),
                   Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const TxtStyle("الحالة الإجتماعية", 12, darkGrey,
+                      children: const [
+                        TxtStyle("الحالة الإجتماعية", 12, darkGrey,
                             FontWeight.normal),
                       //   CustomRadioButton(
                       //       groupValue: groupValue, title: "أعزب"),
