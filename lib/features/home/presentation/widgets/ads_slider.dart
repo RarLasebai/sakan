@@ -31,8 +31,8 @@ class AdsSlider extends StatelessWidget {
                       onPageChanged: (index, reason) {
                         bannersCubit.bannerChanges(index);
                       },
-                      // autoPlay: true,
-                      // autoPlayInterval: const Duration(seconds: 2),
+                      autoPlay: true,
+                      autoPlayInterval: const Duration(seconds: 2),
                       enlargeCenterPage: true,
                       enableInfiniteScroll: true,
                       reverse: false,

@@ -27,6 +27,8 @@ class PinputWidget extends StatelessWidget {
       validator: (value) {
         if (value == null || value.isEmpty) {
           return "من فضلك لا تترك الحقل فارغاً";
+        } else if (value.characters.length < 6) {
+          return "الرمز مكون من 6 أرقام، تحقق مجدداً";
         } else {
           return null;
         }

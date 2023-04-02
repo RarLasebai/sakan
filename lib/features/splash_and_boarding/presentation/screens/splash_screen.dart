@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:sakan/core/utils/screens/home_layout.dart';
 import 'package:sakan/core/utils/widgets/loading_widget.dart';
-import 'package:sakan/core/utils/widgets/show_snack_bar.dart';
+import 'package:sakan/core/utils/widgets/show_toast.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 import 'package:sakan/features/auth/application/auth_cubit/auth_cubit.dart';
 import 'package:sakan/features/auth/application/auth_cubit/auth_states.dart';
@@ -49,18 +49,18 @@ class SplashScreen extends StatelessWidget {
               SizedBox(
                 height: 100.h,
               ),
-               const SizedBox(
-              height: 100,
-            ),
-            const SpinKitWanderingCubes(
-              color: Colors.white,
-              size: 50,
-            ),
+              const SizedBox(
+                height: 100,
+              ),
+              const SpinKitWanderingCubes(
+                color: Colors.white,
+                size: 50,
+              ),
               BlocConsumer<AuthCubit, AuthStates>(
                   listener: (context, authState) {
                 if (authState is AuthSuccessState) {
                   Timer(
-                     const Duration(seconds: 7),
+                      const Duration(seconds: 2),
                       () => Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
@@ -71,17 +71,16 @@ class SplashScreen extends StatelessWidget {
                 } else if (authState is AuthFailState) {
                   {
                     Timer(
-                     const Duration(seconds: 7),
-                      () =>
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BoardingScreen()),
-                      (Route<dynamic> route) => false,
-                    ));
+                        const Duration(seconds: 7),
+                        () => Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const BoardingScreen()),
+                              (Route<dynamic> route) => false,
+                            ));
                   }
                 } else if (authState is AuthErrorState) {
-                  showSnackBar(context, authState.message);
+                  showToast(context, authState.message);
                 }
               }, builder: (context, authState) {
                 if (authState is AuthLoadingState) {

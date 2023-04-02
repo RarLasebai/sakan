@@ -5,7 +5,7 @@ import 'package:sakan/core/utils/colors/colors.dart';
 import 'package:sakan/core/utils/widgets/custom_button.dart';
 import 'package:sakan/core/utils/widgets/custom_text_field.dart';
 import 'package:sakan/core/utils/widgets/loading_widget.dart';
-import 'package:sakan/core/utils/widgets/show_snack_bar.dart';
+import 'package:sakan/core/utils/widgets/show_toast.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 import 'package:sakan/features/auth/application/signup_cubit/signup_cubit.dart';
 import 'package:sakan/features/auth/application/signup_cubit/signup_states.dart';
@@ -25,8 +25,8 @@ class SignUpOneScreen extends StatelessWidget {
 
     GlobalKey<FormState> signUpOneFormKey = GlobalKey<FormState>();
 
-    return BlocProvider(
-      create: (context) => SignupCubit(),
+    return BlocProvider.value(
+      value: SignupCubit(),
       child: Scaffold(
         body: Form(
           key: signUpOneFormKey,
@@ -70,6 +70,8 @@ class SignUpOneScreen extends StatelessWidget {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "من فضلك لا تترك الحقل فارغاً";
+                        } else if (value.characters.length < 8) {
+                          return "من فضلك تأكد من رقم الهاتف";
                         } else {
                           return null;
                         }
@@ -124,7 +126,7 @@ class SignUpOneScreen extends StatelessWidget {
                     SignupCubit signupCubit = SignupCubit.get(context);
 
                     if (signupState is CodeSentSuccessState) {
-                      Navigator.push(
+                      Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
                             builder: (context) => BlocProvider.value(
@@ -137,9 +139,10 @@ class SignUpOneScreen extends StatelessWidget {
                                   password: passwordController.text,
                                   personalProof: personalProofController.text,
                                 ))),
+                        (Route<dynamic> route) => false,
                       );
                     } else if (signupState is SignupErrorState) {
-                      showSnackBar(context, signupState.message);
+                      showToast(context, signupState.message);
                     }
                   }, builder: (context, signupState) {
                     SignupCubit signupCubit = SignupCubit.get(context);

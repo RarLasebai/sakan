@@ -7,7 +7,7 @@ import 'package:sakan/core/utils/screens/home_layout.dart';
 import 'package:sakan/core/utils/widgets/custom_button.dart';
 import 'package:sakan/core/utils/widgets/custom_text_field.dart';
 import 'package:sakan/core/utils/widgets/loading_widget.dart';
-import 'package:sakan/core/utils/widgets/show_snack_bar.dart';
+import 'package:sakan/core/utils/widgets/show_toast.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 import 'package:sakan/features/auth/application/login_cubit/login_cubit.dart';
 import 'package:sakan/features/auth/application/login_cubit/login_states.dart';
@@ -87,7 +87,7 @@ class LoginScreen extends StatelessWidget {
                                   )),
                           (Route<dynamic> route) => false);
                     } else if (state is UserNotFoundState) {
-                      showSnackBar(context,
+                      showToast(context,
                           "رقم الهاتف أو كلمة المرور غير صحيحة، تحقق مجدداً.");
                     }
                   }, builder: (context, state) {

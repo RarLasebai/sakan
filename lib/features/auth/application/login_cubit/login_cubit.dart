@@ -32,7 +32,7 @@ class LoginCubit extends Cubit<LoginStates> {
           UserModel user = UserModel.fromMap(data);
           setSignin();
           emit(LoginSuccessState(user));
-        //then set shared pref
+          //then set shared pref
           try {
             storeDataLocally(user);
             print("saved");
@@ -50,10 +50,15 @@ class LoginCubit extends Cubit<LoginStates> {
 
   //store data locally
   Future storeDataLocally(UserModel userModel) async {
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-    await sharedPreferences.setString(
-        "user_model", jsonEncode(userModel.toMap()));
+    try {
+      final SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      await sharedPreferences.setString(
+          "user_model", jsonEncode(userModel.toMap()));
+      setSignin();
+    } catch (e) {
+      emit(LoginErrorState(e.toString()));
+    }
   }
 
   Future setSignin() async {

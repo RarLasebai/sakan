@@ -27,17 +27,17 @@ class HomeLayout extends StatelessWidget {
               textDirection: TextDirection.rtl,
               child: Scaffold(
                 floatingActionButton: FloatingActionButton(
-                  child: const Icon(Icons.logout_outlined),
-                  onPressed: () {
-                  appCubit
-                      .signOut()
-                      .then((value) => Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SplashScreen()),
-                            (Route<dynamic> route) => false,
-                          ));
-                }),
+                    child: const Icon(Icons.logout_outlined),
+                    onPressed: () {
+                      appCubit
+                          .signOut()
+                          .then((value) => Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SplashScreen()),
+                                (Route<dynamic> route) => false,
+                              ));
+                    }),
                 body: appCubit.screens[appCubit.currentIndex],
                 bottomNavigationBar: ClipRRect(
                   borderRadius: BorderRadius.all(

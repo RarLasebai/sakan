@@ -84,13 +84,13 @@ class SignUpTwoScreen extends StatelessWidget {
                             //
                             CustomRadioButton(
                               groupValue: signupCubit.groupValue,
-                              onChanged: signupCubit.onChanged("أعزب"),
-                              title: "متزوج",
+                              onChanged: (_) => signupCubit.onChanged("أعزب"),
+                              title: "أعزب",
                             ),
                             CustomRadioButton(
                               groupValue: signupCubit.groupValue,
                               title: "متزوج",
-                              onChanged: signupCubit.onChanged("متزوج"),
+                              onChanged: (_) => signupCubit.onChanged("متزوج"),
                             ),
                           ]);
                     }),

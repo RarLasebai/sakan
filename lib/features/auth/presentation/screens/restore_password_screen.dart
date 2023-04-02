@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sakan/core/utils/widgets/custom_button.dart';
 import 'package:sakan/core/utils/widgets/custom_text_field.dart';
 import 'package:sakan/core/utils/widgets/loading_widget.dart';
-import 'package:sakan/core/utils/widgets/show_snack_bar.dart';
+import 'package:sakan/core/utils/widgets/show_toast.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 import 'package:sakan/features/auth/application/forget_pass_cubit/foget_pass_states.dart';
 import 'package:sakan/features/auth/presentation/screens/restore_pass_otp_screen.dart';
@@ -23,8 +23,8 @@ class RestorePasswordScreen extends StatelessWidget {
 
     GlobalKey<FormState> restorePasswordFormKey = GlobalKey<FormState>();
 
-    return BlocProvider(
-      create: (context) => ForgetPassCubit(),
+    return BlocProvider.value(
+      value: ForgetPassCubit(),
       child: Scaffold(
         appBar: AppBar(
             centerTitle: true,
@@ -65,6 +65,8 @@ class RestorePasswordScreen extends StatelessWidget {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "من فضلك لا تترك الحقل فارغاً";
+                        } else if (value.characters.length < 8) {
+                          return "من فضلك تأكد من رقم الهاتف";
                         } else {
                           return null;
                         }
@@ -78,19 +80,21 @@ class RestorePasswordScreen extends StatelessWidget {
                     if (state is UserFoundState) {
                       print("user found");
                     } else if (state is ForgetPassUserNotFoundState) {
-                      showSnackBar(context,
+                      showToast(context,
                           "الرقم غير موجود، تحقق من الرقم أو سجل حساباً جديداً");
                     } else if (state is ForgetPassCodeSentState) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => BlocProvider.value(
-                                value: forgetPassCubit,
-                                child: RestorePassOtpScreen(
-                                    forgetPassCubit: forgetPassCubit,
-                                    verificationId: state.verId,
-                                    userModel: state.user),
-                              )));
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BlocProvider.value(
+                                  value: forgetPassCubit,
+                                  child: RestorePassOtpScreen(
+                                      forgetPassCubit: forgetPassCubit,
+                                      verificationId: state.verId,
+                                      userModel: state.user),
+                                )),
+                        (Route<dynamic> route) => false,
+                      );
                     }
                   }, builder: (context, state) {
                     ForgetPassCubit forgetPassCubit =
@@ -101,9 +105,11 @@ class RestorePasswordScreen extends StatelessWidget {
                       return CustomButton(
                           text: "استرجاع",
                           onTap: () {
-                            // if (signUpOneFormKey.currentState!.validate()) {}
-                            forgetPassCubit
-                                .checkPhoneExist(phoneController.text);
+                            if (restorePasswordFormKey.currentState!
+                                .validate()) {
+                              forgetPassCubit
+                                  .checkPhoneExist(phoneController.text);
+                            }
                           });
                     }
                   }),

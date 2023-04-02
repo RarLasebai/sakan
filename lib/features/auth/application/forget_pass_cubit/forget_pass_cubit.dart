@@ -80,7 +80,7 @@ class ForgetPassCubit extends Cubit<ForgetPassStates> {
       }
       emit(ForgetPassVerifiedState());
     } on FirebaseAuthException catch (e) {
-      emit(ForgetPassErrorState(e.toString()));
+      emit(ForgetPassWrongOTpState());
     }
   }
 
@@ -109,11 +109,9 @@ class ForgetPassCubit extends Cubit<ForgetPassStates> {
         "user_model", jsonEncode(userModel.toMap()));
   }
 
-  
   Future setSignin() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     sharedPreferences.setBool("is_signed_in", true);
   }
-
 }

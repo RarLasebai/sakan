@@ -3,10 +3,10 @@ import 'package:sakan/core/utils/colors/colors.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 
 class CustomRadioButton extends StatelessWidget {
-  dynamic groupValue;
+  final dynamic groupValue;
   final String title;
-  void Function(Object?)? onChanged;
-  CustomRadioButton(
+  final void Function(Object?)? onChanged;
+ const CustomRadioButton(
       {super.key,
       required this.groupValue,
       required this.title,

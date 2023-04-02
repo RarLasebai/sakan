@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakan/core/utils/colors/colors.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
@@ -33,9 +34,11 @@ class CustomTextField extends StatelessWidget {
           obscureText: isPass,
           keyboardType:
               isNumbers == true ? TextInputType.number : TextInputType.text,
-          // inputFormatters: [
-          //   LengthLimitingTextInputFormatter(14),
-          // ],
+          inputFormatters: isPhone == true
+              ? [
+                  LengthLimitingTextInputFormatter(8),
+                ]
+              : null,
           validator: validator,
           controller: controller,
           cursorColor: primary,
@@ -47,14 +50,14 @@ class CustomTextField extends StatelessWidget {
           decoration: InputDecoration(
             suffixIcon: isPhone
                 ? const Padding(
-                  padding: EdgeInsets.all(8),
-                  child: TxtStyle(
-                    "09 218+",
-                    13,
-                    Colors.black,
-                    FontWeight.bold,
-                  ),
-                )
+                    padding: EdgeInsets.all(8),
+                    child: TxtStyle(
+                      "09 218+",
+                      13,
+                      Colors.black,
+                      FontWeight.bold,
+                    ),
+                  )
                 : null,
             fillColor: softGrey,
             filled: true,

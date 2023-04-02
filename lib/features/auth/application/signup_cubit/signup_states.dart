@@ -11,6 +11,8 @@ class SignupSuccessState extends   SignupStates{}
   RadioButtonChangeState(this.message);
 }
  class OtpVerifiedSuccessState extends   SignupStates{}
+  class OtpWrongState extends   SignupStates{}
+
  class CodeSentSuccessState extends   SignupStates{
   final String verificationId;
   CodeSentSuccessState(this.verificationId);

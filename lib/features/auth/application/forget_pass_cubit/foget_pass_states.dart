@@ -23,6 +23,7 @@ class ForgetPassUserNotFoundState extends ForgetPassStates {}
 
 //user phone is exist and he entered a true otp = ForgetPassVerifiedState
 class ForgetPassVerifiedState extends ForgetPassStates {}
+class ForgetPassWrongOTpState extends ForgetPassStates {}
 
 class PasswordChangedSuccessState extends ForgetPassStates {}
 

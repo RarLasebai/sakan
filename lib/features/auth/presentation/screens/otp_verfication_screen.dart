@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakan/core/utils/colors/colors.dart';
 import 'package:sakan/core/utils/widgets/custom_button.dart';
 import 'package:sakan/core/utils/widgets/loading_widget.dart';
-import 'package:sakan/core/utils/widgets/show_snack_bar.dart';
+import 'package:sakan/core/utils/widgets/show_toast.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 import 'package:sakan/features/auth/application/signup_cubit/signup_cubit.dart';
 import 'package:sakan/features/auth/application/signup_cubit/signup_states.dart';
@@ -68,13 +68,9 @@ class OtpVerficationScreen extends StatelessWidget {
                   ),
                   BlocConsumer<SignupCubit, SignupStates>(
                       listener: (context, signupState) {
-                    if (signupState is SignupSuccessState) {
-                      print("SignupSuccessState");
-                      // Navigator.pushAndRemoveUntil(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => const SignUpTwoScreen()),
-                      //     (Route<dynamic> route) => false);
+                    if (signupState is OtpWrongState) {
+                      showToast(context,
+                          "تحقق من الرمز المرسل إليك وأعد إدخاله مجدداً!");
                     }
                   }, builder: (context, signupState) {
                     // SignupCubit signupCubit = SignupCubit.get(context);
@@ -101,7 +97,7 @@ class OtpVerficationScreen extends StatelessWidget {
                                         //user exist
                                         print("USER EXIST in FireBase ONLY!");
                                         //that means the phone is used before
-                                        showSnackBar(context,
+                                        showToast(context,
                                             "رقم الهاتف مستخدم مسبقاً، سجل الدخول أو قم بتغيير كلمة السر");
                                         Navigator.pushAndRemoveUntil(
                                             context,
@@ -123,7 +119,7 @@ class OtpVerficationScreen extends StatelessWidget {
                                             userNationality: "",
                                             userAddress: "");
 
-                                        Navigator.push(
+                                        Navigator.pushAndRemoveUntil(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
@@ -134,6 +130,7 @@ class OtpVerficationScreen extends StatelessWidget {
                                                       userModel: userModel,
                                                     ),
                                                   )),
+                                          (Route<dynamic> route) => false,
                                         );
                                       }
                                     });

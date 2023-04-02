@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakan/core/utils/colors/colors.dart';
 import 'package:sakan/core/utils/widgets/custom_button.dart';
 import 'package:sakan/core/utils/widgets/loading_widget.dart';
+import 'package:sakan/core/utils/widgets/show_toast.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 import 'package:sakan/features/auth/application/forget_pass_cubit/foget_pass_states.dart';
 import 'package:sakan/features/auth/application/forget_pass_cubit/forget_pass_cubit.dart';
@@ -66,17 +67,23 @@ class RestorePassOtpScreen extends StatelessWidget {
                         child: PinputWidget(otpController: otpController)),
                   ),
                   BlocConsumer<ForgetPassCubit, ForgetPassStates>(
-                      listener: (context, signupState) {
-                    if (signupState is ForgetPassVerifiedState) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => BlocProvider.value(
-                                  value: forgetPassCubit,
-                                  child: ChangePasswordScreen(
-                                    forgetPassCubit: forgetPassCubit,
-                                    userModel: userModel,
-                                  ))));
+                      listener: (context, state) {
+                    if (state is ForgetPassVerifiedState) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BlocProvider.value(
+                                value: forgetPassCubit,
+                                child: ChangePasswordScreen(
+                                  forgetPassCubit: forgetPassCubit,
+                                  userModel: userModel,
+                                ))),
+                        (Route<dynamic> route) => false,
+                      );
+                    }
+                    if (state is ForgetPassWrongOTpState) {
+                      showToast(context,
+                          "تحقق من الرمز المرسل إليك وأعد إدخاله مجدداً!");
                     }
                   }, builder: (context, signupState) {
                     if (signupState is SignupLoadingState) {
