@@ -11,7 +11,12 @@ class AuthSuccessState extends   AuthStates{
   final UserModel userModel;
   AuthSuccessState(this.userModel);
 }
- 
+
+class AuthGetUser extends   AuthStates{
+  final UserModel userModel;
+  AuthGetUser(this.userModel);
+}
+
 class AuthFailState extends   AuthStates{}
 
 class AuthErrorState implements  AuthStates {

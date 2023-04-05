@@ -47,7 +47,9 @@ class RestorePasswordScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset("assets/images/demo.png"),
+                  isProfile == false
+                      ? Image.asset("assets/images/demo.png")
+                      : const SizedBox(),
                   const Padding(
                     padding: EdgeInsets.only(top: 20, bottom: 16),
                     child: Center(

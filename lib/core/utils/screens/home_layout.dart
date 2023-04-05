@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakan/core/app_cubit/app_cubit.dart';
 import 'package:sakan/core/utils/colors/colors.dart';
+import 'package:sakan/features/auth/application/auth_cubit/auth_cubit.dart';
 import 'package:sakan/features/auth/data/model/user_model.dart';
-import 'package:sakan/features/splash_and_boarding/presentation/screens/splash_screen.dart';
 
 import '../../app_cubit/app_states.dart';
 
@@ -17,6 +17,9 @@ class HomeLayout extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (BuildContext context) => AppCubit()),
+        BlocProvider(
+            create: (BuildContext context) =>
+                AuthCubit()..getDataFromSharedPref()),
       ],
       child: BlocConsumer<AppCubit, AppStates>(
           listener: (context, state) {},
@@ -26,18 +29,6 @@ class HomeLayout extends StatelessWidget {
             return Directionality(
               textDirection: TextDirection.rtl,
               child: Scaffold(
-                floatingActionButton: FloatingActionButton(
-                    child: const Icon(Icons.logout_outlined),
-                    onPressed: () {
-                      appCubit
-                          .signOut()
-                          .then((value) => Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SplashScreen()),
-                                (Route<dynamic> route) => false,
-                              ));
-                    }),
                 body: appCubit.screens[appCubit.currentIndex],
                 bottomNavigationBar: ClipRRect(
                   borderRadius: BorderRadius.all(

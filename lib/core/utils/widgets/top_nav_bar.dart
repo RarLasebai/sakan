@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sakan/core/utils/colors/colors.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 
 class TopNavBar extends StatelessWidget with PreferredSizeWidget {
@@ -17,7 +16,7 @@ class TopNavBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        backgroundColor: softGrey,
+        backgroundColor: Colors.white,
         centerTitle: true,
         title: TxtStyle(title, 18, Colors.black, FontWeight.bold),
         elevation: 0,

@@ -80,6 +80,7 @@ class ForgetPassCubit extends Cubit<ForgetPassStates> {
       }
       emit(ForgetPassVerifiedState());
     } on FirebaseAuthException catch (e) {
+      print(e.toString());
       emit(ForgetPassWrongOTpState());
     }
   }
