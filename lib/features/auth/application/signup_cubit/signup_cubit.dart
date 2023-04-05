@@ -48,13 +48,6 @@ class SignupCubit extends Cubit<SignupStates> {
     sharedPreferences.setBool("is_signed_in", true);
   }
 
-  Future signOut() async {
-    await auth.signOut();
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-    sharedPreferences.setBool("is_signed_in", false);
-  }
-
 //Verifing Functions, one for phone and one for OTP:
   //verfiy phone number
 
@@ -102,6 +95,7 @@ class SignupCubit extends Cubit<SignupStates> {
       }
       emit(OtpVerifiedSuccessState());
     } on FirebaseAuthException catch (e) {
+      print(e.toString());
       emit(OtpWrongState());
     }
   }

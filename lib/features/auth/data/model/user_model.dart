@@ -7,6 +7,7 @@ class UserModel {
   String userMartialStatus;
   String userNationality;
   String userAddress;
+  String userPhoto;
 
   UserModel(
       {required this.userName,
@@ -16,7 +17,9 @@ class UserModel {
       required this.userPersonalProof,
       required this.userMartialStatus,
       required this.userNationality,
-      required this.userAddress});
+      required this.userAddress,
+      this.userPhoto =
+          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"});
 
   //from map
   factory UserModel.fromMap(Map<String, dynamic> map) {
@@ -28,7 +31,8 @@ class UserModel {
         userPersonalProof: map["userPersonalProof"] ?? "",
         userMartialStatus: map["userMartialStatus"] ?? "",
         userNationality: map["userNationality"] ?? "",
-        userAddress: map["userAddress"] ?? "");
+        userAddress: map["userAddress"] ?? "",
+        userPhoto: map["userPhoto"] ?? "");
   }
 
   //to map
@@ -41,7 +45,8 @@ class UserModel {
       "userPassword": userPassword,
       "userAddress": userAddress,
       "userNationality": userNationality,
-      "userMartialStatus": userMartialStatus
+      "userMartialStatus": userMartialStatus,
+      "userPhoto": userPhoto
     };
   }
 }

@@ -1,3 +1,4 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:sakan/features/home/presentation/screens/home_screen.dart';
 import 'package:sakan/features/profile/presentation/screens/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../features/auth/data/model/user_model.dart';
 import 'app_states.dart';
 
 class AppCubit extends Cubit<AppStates> {
@@ -18,6 +20,7 @@ class AppCubit extends Cubit<AppStates> {
   //Bottom Navigation Bar
   int currentIndex = 0;
   FirebaseAuth auth = FirebaseAuth.instance;
+  static UserModel? user;
 
   List<Widget> screens = [
     const HomeScreen(),
@@ -32,6 +35,8 @@ class AppCubit extends Cubit<AppStates> {
     currentIndex = index;
     emit(BottomNavBarChangeScreenState());
   }
+
+ 
 
   Future signOut() async {
     await auth.signOut();

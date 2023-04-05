@@ -11,7 +11,7 @@ class AuthCubit extends Cubit<AuthStates> {
   AuthCubit() : super(AuthInitialState());
 
   static AuthCubit get(context) => BlocProvider.of(context);
-
+  FirebaseAuth auth = FirebaseAuth.instance;
   bool isSignedin = false;
   UserModel? userModel;
 
@@ -39,8 +39,15 @@ class AuthCubit extends Cubit<AuthStates> {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     String data = sharedPreferences.getString("user_model") ?? '';
-    return userModel = UserModel.fromMap(jsonDecode(data));
+    final userModel = UserModel.fromMap(jsonDecode(data));
+    emit(AuthGetUser(userModel));
+    return userModel;
   }
 
-
+  Future signOut() async {
+    await auth.signOut();
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    sharedPreferences.setBool("is_signed_in", false);
+  }
 }
