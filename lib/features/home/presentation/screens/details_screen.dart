@@ -17,24 +17,24 @@ class DetailsScreen extends StatelessWidget {
           child: Column(
             children: [
               const HouseSlider(),
-              Expanded(
+              const Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 18, left: 18),
+                  padding: EdgeInsets.only(right: 18, left: 18),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         //house type
-                        const Align(
+                        Align(
                           alignment: Alignment.centerRight,
                           child: TxtStyle("نوع السكن - المنطقة", 16,
                               Colors.black, FontWeight.bold),
                         ),
                         //location
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 6.0),
+                          padding: EdgeInsets.symmetric(vertical: 6.0),
                           child: Row(
-                            children: const [
+                            children: [
                               Icon(
                                 Icons.location_on,
                                 color: primary,
@@ -50,7 +50,7 @@ class DetailsScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
-                              children: const [
+                              children: [
                                 Align(
                                   alignment: Alignment.topRight,
                                   child: TxtStyle("اللون", 16, Colors.black,
@@ -63,7 +63,7 @@ class DetailsScreen extends StatelessWidget {
                               ],
                             ),
                             Column(
-                              children: const [
+                              children: [
                                 Align(
                                   alignment: Alignment.topRight,
                                   child: TxtStyle("تاريخ العرض", 16,
@@ -80,7 +80,7 @@ class DetailsScreen extends StatelessWidget {
                         //description
                         Column(
                           // mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
+                          children: [
                             Align(
                               alignment: Alignment.topRight,
                               child: TxtStyle(
@@ -115,14 +115,14 @@ class DetailsScreen extends StatelessWidget {
 
               //call and cost
 
-              Padding(
-                padding: const EdgeInsets.only(
+              const Padding(
+                padding: EdgeInsets.only(
                     left: 18.0, right: 18.0, top: 6, bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
-                      children: const [
+                      children: [
                         Align(
                             alignment: Alignment.topRight,
                             child: TxtStyle(
@@ -134,7 +134,7 @@ class DetailsScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const CallWidget(isPink: true)
+                    CallWidget(isPink: true)
                   ],
                 ),
               ),

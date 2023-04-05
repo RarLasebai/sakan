@@ -44,8 +44,8 @@ class HouseWidget extends StatelessWidget {
                 children: [
                   const TxtStyle(
                       "نوع السكن - المنطقة", 16, Colors.black, FontWeight.bold),
-                  Row(
-                    children: const [
+                  const Row(
+                    children: [
                       Icon(
                         Icons.location_on,
                         color: primary,
@@ -59,13 +59,13 @@ class HouseWidget extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 4, bottom: 12),
                     child: SizedBox(
                       width: 300.w,
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           //cost
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
+                            children: [
                               TxtStyle(
                                   "السعر", 12, darkGrey, FontWeight.normal),
                               TxtStyle("12000 LYD", 16, Colors.black,
@@ -73,7 +73,7 @@ class HouseWidget extends StatelessWidget {
                             ],
                           ),
                           //call icon
-                          const CallWidget()
+                          CallWidget()
                         ],
                       ),
                     ),

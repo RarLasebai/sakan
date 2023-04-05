@@ -17,12 +17,12 @@ class ViewMoreScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 25),
+              const Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 25),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: const [
+                    children: [
                       HouseTypeWidget(isSelected: true, title: "شقق"),
                       HouseTypeWidget(isSelected: false, title: "منازل بدورين"),
                       HouseTypeWidget(isSelected: false, title: "منزل أرضي"),

@@ -49,8 +49,8 @@ class SearchScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Row(
-                children: const [
+              const Row(
+                children: [
                   Icon(
                     Icons.hive_outlined,
                     // size: 50,

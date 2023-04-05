@@ -76,10 +76,10 @@ class FormScreen extends StatelessWidget {
                                         child: const Icon(
                                             Icons.add_a_photo_outlined)),
                                   ),
-                                  Column(
+                                  const Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: const [
+                                    children: [
                                       TxtStyle("ارفع صور السكن", 14,
                                           Colors.black, FontWeight.normal),
                                       TxtStyle("اختر صوراً واضحة لرفعها", 12,

@@ -25,9 +25,9 @@ class HomeScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       TxtStyle(
                           "مرحباً بك!", 22, Colors.black, FontWeight.normal),
                       TxtStyle(

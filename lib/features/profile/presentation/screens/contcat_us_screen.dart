@@ -23,8 +23,8 @@ class ContactUsScreen extends StatelessWidget {
               ),
             ),
           ),
-          Column(
-            children: const [
+          const Column(
+            children: [
               TxtStyle("تطبيق سكن", 18, Colors.black, FontWeight.normal),
               TxtStyle(
                 '''
@@ -41,11 +41,11 @@ class ContactUsScreen extends StatelessWidget {
               ),
             ],
           ),
-          Directionality(
+          const Directionality(
             textDirection: TextDirection.ltr,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 TxtStyle("POWERED BY:  ", 13, Colors.black, FontWeight.normal),
                 TxtStyle(
                   "Sakan Company",
