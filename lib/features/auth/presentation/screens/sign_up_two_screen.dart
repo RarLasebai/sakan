@@ -6,6 +6,7 @@ import 'package:sakan/core/utils/colors/colors.dart';
 import 'package:sakan/core/utils/screens/home_layout.dart';
 import 'package:sakan/core/utils/widgets/custom_button.dart';
 import 'package:sakan/core/utils/widgets/custom_text_field.dart';
+import 'package:sakan/core/utils/widgets/show_toast.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 import 'package:sakan/features/auth/application/signup_cubit/signup_cubit.dart';
 import 'package:sakan/features/auth/application/signup_cubit/signup_states.dart';
@@ -115,6 +116,9 @@ class SignUpTwoScreen extends StatelessWidget {
                                     signupCubit.storeDataLocally().then(
                                         (value) {
                                       signupCubit.setSignin();
+                                      showToast(context,
+                                          "تم تسجيل الحساب بنجاح، مرحباً بك معنا!",
+                                          color: Colors.green);
                                       print("saved");
                                     }).then((value) =>
                                         Navigator.pushAndRemoveUntil(

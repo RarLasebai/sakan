@@ -33,3 +33,5 @@ class ForgetPassErrorState implements ForgetPassStates {
   final String message;
   ForgetPassErrorState(this.message);
 }
+class ForgetPassChangePassVisibiltyState extends ForgetPassStates {}
+

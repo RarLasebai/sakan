@@ -19,6 +19,9 @@ class ProfilePhotoURLState extends ProfileStates {
   ProfilePhotoURLState(this.photoUrl);
 }
 
+class NoDataChangedState extends ProfileStates {}
+
+
 class ProfileSuccessState extends ProfileStates {}
 
 class ProfileErrorState implements ProfileStates {

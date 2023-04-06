@@ -16,6 +16,8 @@ import 'package:sakan/features/auth/presentation/screens/login_screen.dart';
 import 'package:sakan/features/auth/presentation/screens/sign_up_two_screen.dart';
 import 'package:sakan/features/auth/presentation/widgets/pinput_widget.dart';
 
+//This OTP Screen will work when user sign up "new user"
+//because we using SignupCubit here.
 class OtpVerficationScreen extends StatelessWidget {
   final String verificationId, phoneNumber, name, personalProof, password;
   final SignupCubit signupCubit;

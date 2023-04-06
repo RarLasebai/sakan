@@ -8,8 +8,10 @@ class CustomTextField extends StatelessWidget {
   final String hint;
   final TextEditingController? controller;
   final int width;
-  final bool isNumbers, isPhone, isPass;
+  final bool isNumbers, isPhone, isPass, isPassField;
   final VoidCallback? onTap;
+  final void Function()? suffixOnTap;
+  final IconData suffixIcon;
 
   final FormFieldValidator<String> validator;
 
@@ -17,8 +19,11 @@ class CustomTextField extends StatelessWidget {
     required this.hint,
     required this.controller,
     required this.validator,
+    this.suffixIcon = Icons.visibility_outlined,
+    this.suffixOnTap,
     this.isNumbers = false,
     this.isPass = false,
+    this.isPassField = false,
     this.isPhone = false,
     this.onTap,
     this.width = 327,
@@ -58,7 +63,15 @@ class CustomTextField extends StatelessWidget {
                       FontWeight.bold,
                     ),
                   )
-                : null,
+                : isPassField
+                    ? IconButton(
+                        onPressed: suffixOnTap,
+                        icon: Icon(
+                          suffixIcon,
+                          color: darkGrey,
+                        ),
+                      )
+                    : null,
             fillColor: softGrey,
             filled: true,
             focusedBorder: OutlineInputBorder(

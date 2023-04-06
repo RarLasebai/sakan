@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,147 +24,147 @@ class EditPersonalDataScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: profileCubit,
-      child: BlocConsumer<ProfileCubit, ProfileStates>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            ProfileCubit profileCubit = ProfileCubit.get(context);
+      child:
+          BlocConsumer<ProfileCubit, ProfileStates>(listener: (context, state) {
+        if (state is NoDataChangedState) {
+          showToast(context, "لا توجد بيانات محدثة");
+          Navigator.pop(context);
+        } else if (state is ProfileUpdatedSuccessfuly) {
+          showToast(context, "تم تحديث البيانات بنجاح", color: Colors.green);
+          Navigator.pop(context);
+        } else if (state is ProfileErrorState) {
+          showToast(
+            context,
+            "حدث خطأ ما، حاول مجدداً",
+          );
+          Navigator.pop(context);
+        }
+      }, builder: (context, state) {
+        ProfileCubit profileCubit = ProfileCubit.get(context);
 
-            changePhoto() {
-              profileCubit.changePhoto(context, userModel);
-            }
+        changePhoto() {
+          profileCubit.changePhoto(context, userModel);
+        }
 
-            return Scaffold(
-              appBar: TopNavBar("تعديل البيانات الشخصية"),
-              body: Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          right: 17, left: 31, bottom: 10, top: 15),
-                      child: Form(
-                        key: profileCubit.editProfileDataKey,
-                        child: BlocBuilder<ProfileCubit, ProfileStates>(
-                            builder: (context, state) {
-                          if (state is ProfileLoadingState) {
-                            return const LoadingWidget();
-                          }
-                          if (state is ProfileUpdatedSuccessfuly) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                EditProfilePhotoWidget(
+        return Scaffold(
+          appBar: TopNavBar("تعديل البيانات الشخصية"),
+          body: Directionality(
+              textDirection: TextDirection.rtl,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      right: 17, left: 31, bottom: 10, top: 15),
+                  child: Form(
+                    key: profileCubit.editProfileDataKey,
+                    child: BlocBuilder<ProfileCubit, ProfileStates>(
+                        builder: (context, state) {
+                      // if (state is ProfileLoadingState) {
+                      //   return
+                      // }
+                      if (state is ProfileUpdatedSuccessfuly) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            EditProfilePhotoWidget(
+                              onTap: () {
+                                changePhoto();
+                              },
+                              image: userModel.userPhoto,
+                            ),
+                            const TxtStyle(
+                                "الاسم", 14, darkGrey, FontWeight.normal),
+                            CustomTextField(
+                                hint: state.userModel.userName,
+                                controller: profileCubit.nameController,
+                                validator: (val) {
+                                  return null;
+                                }),
+                            SizedBox(height: 10.h),
+                            const TxtStyle(
+                                "المنطقة", 14, darkGrey, FontWeight.normal),
+                            CustomTextField(
+                                hint: state.userModel.userAddress,
+                                controller: profileCubit.addressController,
+                                validator: (val) {
+                                  return null;
+                                }),
+                            SizedBox(height: 10.h),
+                            const TxtStyle(
+                                "الجنسية", 14, darkGrey, FontWeight.normal),
+                            CustomTextField(
+                                hint: state.userModel.userNationality,
+                                controller: profileCubit.nationalityController,
+                                validator: (val) {
+                                  return null;
+                                }),
+                            SizedBox(height: 15.h),
+                            ConditionalBuilder(
+                              fallback: (context) => const LoadingWidget(),
+                              condition: state is! ProfileLoadingState,
+                              builder: (context) => CustomButton(
+                                  text: "حفظ",
                                   onTap: () {
-                                    changePhoto();
-                                  },
-                                  image: userModel.userPhoto,
-                                ),
-                                const TxtStyle(
-                                    "الاسم", 14, darkGrey, FontWeight.normal),
-                                CustomTextField(
-                                    hint: state.userModel.userName,
-                                    controller: profileCubit.nameController,
-                                    validator: (val) {
-                                      return null;
-                                    }),
-                                SizedBox(height: 10.h),
-                                const TxtStyle(
-                                    "المنطقة", 14, darkGrey, FontWeight.normal),
-                                CustomTextField(
-                                    hint: state.userModel.userAddress,
-                                    controller: profileCubit.addressController,
-                                    validator: (val) {
-                                      return null;
-                                    }),
-                                SizedBox(height: 10.h),
-                                const TxtStyle(
-                                    "الجنسية", 14, darkGrey, FontWeight.normal),
-                                CustomTextField(
-                                    hint: state.userModel.userNationality,
-                                    controller:
-                                        profileCubit.nationalityController,
-                                    validator: (val) {
-                                      return null;
-                                    }),
-                                SizedBox(height: 15.h),
-                                CustomButton(
-                                    text: "حفظ",
-                                    onTap: () {
-                                      profileCubit
-                                          .updateProfileData(state.userModel)
-                                          .then((value) {
-                                        showToast(
-                                            context, "تم تحديث البيانات بنجاح",
-                                            color: Colors.green);
-                                        Navigator.pop(context);
-                                      }).catchError((_) {
-                                        showToast(context,
-                                            "حدث خطأ ما، الرجاء المحاولة مجدداً");
-                                      });
-                                    }),
-                              ],
-                            );
-                          } else {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                EditProfilePhotoWidget(
+                                    profileCubit
+                                        .updateProfileData(state.userModel);
+                                  }),
+                            ),
+                          ],
+                        );
+                      } else {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            EditProfilePhotoWidget(
+                              onTap: () {
+                                changePhoto();
+                              },
+                              image: userModel.userPhoto,
+                            ),
+                            const TxtStyle(
+                                "الاسم", 14, darkGrey, FontWeight.normal),
+                            CustomTextField(
+                                hint: userModel.userName,
+                                controller: profileCubit.nameController,
+                                validator: (val) {
+                                  return null;
+                                }),
+                            SizedBox(height: 10.h),
+                            const TxtStyle(
+                                "المنطقة", 14, darkGrey, FontWeight.normal),
+                            CustomTextField(
+                                hint: userModel.userAddress,
+                                controller: profileCubit.addressController,
+                                validator: (val) {
+                                  return null;
+                                }),
+                            SizedBox(height: 10.h),
+                            const TxtStyle(
+                                "الجنسية", 14, darkGrey, FontWeight.normal),
+                            CustomTextField(
+                                hint: userModel.userNationality,
+                                controller: profileCubit.nationalityController,
+                                validator: (val) {
+                                  return null;
+                                }),
+                            SizedBox(height: 15.h),
+                            ConditionalBuilder(
+                              fallback: (context) => const LoadingWidget(),
+                              condition: state is! ProfileLoadingState,
+                              builder: (context) => CustomButton(
+                                  text: "حفظ",
                                   onTap: () {
-                                    changePhoto();
-                                  },
-                                  image: userModel.userPhoto,
-                                ),
-                                const TxtStyle(
-                                    "الاسم", 14, darkGrey, FontWeight.normal),
-                                CustomTextField(
-                                    hint: userModel.userName,
-                                    controller: profileCubit.nameController,
-                                    validator: (val) {
-                                      return null;
-                                    }),
-                                SizedBox(height: 10.h),
-                                const TxtStyle(
-                                    "المنطقة", 14, darkGrey, FontWeight.normal),
-                                CustomTextField(
-                                    hint: userModel.userAddress,
-                                    controller: profileCubit.addressController,
-                                    validator: (val) {
-                                      return null;
-                                    }),
-                                SizedBox(height: 10.h),
-                                const TxtStyle(
-                                    "الجنسية", 14, darkGrey, FontWeight.normal),
-                                CustomTextField(
-                                    hint: userModel.userNationality,
-                                    controller:
-                                        profileCubit.nationalityController,
-                                    validator: (val) {
-                                      return null;
-                                    }),
-                                SizedBox(height: 15.h),
-                                CustomButton(
-                                    text: "حفظ",
-                                    onTap: () {
-                                      profileCubit
-                                          .updateProfileData(userModel)
-                                          .then((value) {
-                                        showToast(
-                                            context, "تم تحديث البيانات بنجاح",
-                                            color: Colors.green);
-                                        Navigator.pop(context);
-                                      }).catchError((_) {
-                                        showToast(context,
-                                            "حدث خطأ ما، الرجاء المحاولة مجدداً");
-                                      });
-                                    }),
-                              ],
-                            );
-                          }
-                        }),
-                      ),
-                    ),
-                  )),
-            );
-          }),
+                                    profileCubit.updateProfileData(userModel);
+                                  }),
+                            ),
+                          ],
+                        );
+                      }
+                    }),
+                  ),
+                ),
+              )),
+        );
+      }),
     );
   }
 }

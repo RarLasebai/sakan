@@ -4,7 +4,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sakan/core/utils/widgets/show_toast.dart';
 import 'package:sakan/features/auth/application/signup_cubit/signup_states.dart';
@@ -145,5 +145,17 @@ class SignupCubit extends Cubit<SignupStates> {
         await SharedPreferences.getInstance();
     await sharedPreferences.setString(
         "user_model", jsonEncode(fullUserModel!.toMap()));
+  }
+
+  //show-hide password
+  IconData suffixIcon = Icons.visibility_outlined;
+  bool isPassword = true;
+  void changePassVisibilty() {
+    print("object");
+    isPassword = !isPassword;
+    suffixIcon =
+        isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
+
+    emit(SignupChangePassVisibiltyState());
   }
 }

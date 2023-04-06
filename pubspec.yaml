@@ -51,6 +51,7 @@ dependencies:
   fluttertoast: ^8.2.1
   image_picker: ^0.8.7+1
   firebase_storage: ^11.0.16
+  conditional_builder_null_safety: ^0.0.6
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,38 +24,45 @@ class ProfileCubit extends Cubit<ProfileStates> {
 
   Future updateProfileData(UserModel userModel) async {
     emit(ProfileLoadingState());
-    try {
-      await _firestore.collection("users").doc(userModel.userId).update({
-        "userName": nameController.text.isEmpty
-            ? userModel.userName
-            : nameController.text,
-        "userNationality": nationalityController.text.isEmpty
-            ? userModel.userNationality
-            : nationalityController.text,
-        "userAddress": addressController.text.isEmpty
-            ? userModel.userAddress
-            : addressController.text,
-            "userPhoto" : image ?? userModel.userPhoto
-      }).then((value) {
-        nameController.clear();
-        nationalityController.clear();
-        addressController.clear();
-      });
+    if (nameController.text.isEmpty &&
+        nationalityController.text.isEmpty &&
+        addressController.text.isEmpty &&
+        image == null) {
+      emit(NoDataChangedState());
+    } else {
+      try {
+        await _firestore.collection("users").doc(userModel.userId).update({
+          "userName": nameController.text.isEmpty
+              ? userModel.userName
+              : nameController.text,
+          "userNationality": nationalityController.text.isEmpty
+              ? userModel.userNationality
+              : nationalityController.text,
+          "userAddress": addressController.text.isEmpty
+              ? userModel.userAddress
+              : addressController.text,
+          "userPhoto": image ?? userModel.userPhoto
+        }).then((value) {
+          nameController.clear();
+          nationalityController.clear();
+          addressController.clear();
+        });
 
-      QuerySnapshot query = await _firestore
-          .collection("users")
-          .where("userId", isEqualTo: userModel.userId)
-          .get();
+        QuerySnapshot query = await _firestore
+            .collection("users")
+            .where("userId", isEqualTo: userModel.userId)
+            .get();
 
-      query.docs.forEach((element) async {
-        final data = element.data() as Map<String, dynamic>;
-        UserModel user = UserModel.fromMap(data);
-        await storeDataLocally(user);
-        user = await getDataFromSharedPref();
-        emit(ProfileUpdatedSuccessfuly(user));
-      });
-    } catch (e) {
-      emit(ProfileErrorState(e.toString()));
+        query.docs.forEach((element) async {
+          final data = element.data() as Map<String, dynamic>;
+          UserModel user = UserModel.fromMap(data);
+          await storeDataLocally(user);
+          user = await getDataFromSharedPref();
+          emit(ProfileUpdatedSuccessfuly(user));
+        });
+      } catch (e) {
+        emit(ProfileErrorState(e.toString()));
+      }
     }
   }
 

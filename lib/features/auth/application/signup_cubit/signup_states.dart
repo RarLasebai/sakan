@@ -22,3 +22,5 @@ class SignupErrorState implements  SignupStates {
   final String message;
   SignupErrorState(this.message);
 }
+
+class SignupChangePassVisibiltyState extends   SignupStates{}

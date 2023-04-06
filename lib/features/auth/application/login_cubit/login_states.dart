@@ -24,3 +24,5 @@ class LoginErrorState implements LoginStates {
   final String message;
   LoginErrorState(this.message);
 }
+
+class LoginChangePassVisibiltyState extends LoginStates {}

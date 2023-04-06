@@ -11,10 +11,13 @@ import 'package:sakan/core/utils/widgets/show_toast.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 import 'package:sakan/features/auth/application/forget_pass_cubit/foget_pass_states.dart';
 import 'package:sakan/features/auth/application/forget_pass_cubit/forget_pass_cubit.dart';
-import 'package:sakan/features/auth/application/signup_cubit/signup_states.dart';
 import 'package:sakan/features/auth/data/model/user_model.dart';
 import 'package:sakan/features/auth/presentation/screens/change_password_screen.dart';
 import 'package:sakan/features/auth/presentation/widgets/pinput_widget.dart';
+
+//This OTP Screen will work when user Forget his password
+//and we confirm that he is really stored in our firebase
+//and also because we using ForgetPassCubit here.
 
 class RestorePassOtpScreen extends StatelessWidget {
   final String verificationId;
@@ -85,8 +88,8 @@ class RestorePassOtpScreen extends StatelessWidget {
                       showToast(context,
                           "تحقق من الرمز المرسل إليك وأعد إدخاله مجدداً!");
                     }
-                  }, builder: (context, signupState) {
-                    if (signupState is SignupLoadingState) {
+                  }, builder: (context, state) {
+                    if (state is ForgetPassLoadingState) {
                       return const LoadingWidget();
                     } else {
                       return CustomButton(
