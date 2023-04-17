@@ -4,12 +4,16 @@ import 'package:sakan/core/utils/widgets/custom_text_field.dart';
 
 class FieldWidget extends StatelessWidget {
   final String icon, hint;
+  final bool isPrice, isDesc, isLocation;
   final TextEditingController controller;
   const FieldWidget(
       {super.key,
       required this.hint,
       required this.icon,
-      required this.controller});
+      required this.controller,
+      this.isDesc = false,
+      this.isPrice = false,
+      this.isLocation = false});
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +31,17 @@ class FieldWidget extends StatelessWidget {
         ),
         Expanded(
           child: CustomTextField(
+              isLocation: isLocation,
+              isPrice: isPrice,
+              isDesc: isDesc,
               hint: hint,
               controller: controller,
               validator: (validator) {
-                return null;
+                if (validator == null || validator.isEmpty) {
+                  return "لا تترك الحقل فارغاً";
+                } else {
+                  return null;
+                }
               }),
         )
       ],

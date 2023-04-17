@@ -29,6 +29,7 @@ class HomeLayout extends StatelessWidget {
             return Directionality(
               textDirection: TextDirection.rtl,
               child: Scaffold(
+                resizeToAvoidBottomInset: true,
                 body: appCubit.screens[appCubit.currentIndex],
                 bottomNavigationBar: ClipRRect(
                   borderRadius: BorderRadius.all(

@@ -30,8 +30,13 @@ class SuccessDialog extends StatelessWidget {
               SizedBox(height: 33.h),
               const TxtStyle(
                   "تم إرسال النموذج", 18, Colors.black, FontWeight.bold),
-              const TxtStyle("سيتواصل معك مندوب المكتب قريباً", 12, darkGrey,
-                  FontWeight.normal)
+              const TxtStyle(
+                "سيتواصل معك مندوب المكتب قريباً",
+                12,
+                darkGrey,
+                FontWeight.normal,
+                longText: true,
+              )
             ],
           ),
         ),

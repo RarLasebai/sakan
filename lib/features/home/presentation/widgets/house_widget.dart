@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakan/core/utils/colors/colors.dart';
@@ -19,18 +21,14 @@ class HouseWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15.r),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const DetailsScreen()));
-                  },
-                  child: const Image(
-                    image: AssetImage("assets/images/room.png"),
-                  ),
+              child: Container(
+                width: 320.w,
+                height: 172.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15.r),
+                  image: const DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage("assets/images/room.png")),
                 ),
               ),
             ),

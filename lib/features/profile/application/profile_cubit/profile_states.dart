@@ -1,5 +1,7 @@
 import 'package:sakan/features/auth/data/model/user_model.dart';
 
+import '../../../form/data/model/house_model.dart';
+
 abstract class ProfileStates {}
 
 class ProfileInitialState extends ProfileStates {}
@@ -21,8 +23,13 @@ class ProfilePhotoURLState extends ProfileStates {
 
 class NoDataChangedState extends ProfileStates {}
 
-
 class ProfileSuccessState extends ProfileStates {}
+
+class HousesIsEmptyState extends ProfileStates{}
+class MyHousesLoadedState extends ProfileStates {
+  List<HouseModel> houses;
+  MyHousesLoadedState({required this.houses});
+}
 
 class ProfileErrorState implements ProfileStates {
   final String message;

@@ -26,8 +26,10 @@ Future storeDataLocally(UserModel userModel) async {
       "user_model", jsonEncode(userModel.toMap()));
 }
 
-Future<File?> pickImage(BuildContext context) async {
+Future<File?> pickImage(BuildContext context,
+    {bool multiPhotos = false}) async {
   File? image;
+
   try {
     final pickedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -35,7 +37,7 @@ Future<File?> pickImage(BuildContext context) async {
       image = File(pickedImage.path);
     }
   } catch (e) {
-    showToast(context, e.toString());
+    showToast(context, "حدث خطأ ما $e");
   }
   return image;
 }
@@ -47,3 +49,24 @@ Future<String> storeFileToStorage(String ref, File file) async {
 
   return downloadUrl;
 }
+//---------------------------------------------------------
+ String getHouseStatusInArabic(String engStatus) {
+/*
+sent - أرسل النموذج من المستخدم للوحة التحكم
+inReview - تتم المراجعة
+accepted - تم القبول
+rejected - تم الرفض
+*/
+    if (engStatus == "inReview") {
+      return "قيد المراجعة";
+    } else if (engStatus == "accepted") {
+      return "تم القبول";
+    } else if (engStatus == "rejected") {
+      return "مرفوض";
+    } else if (engStatus == "sent") {
+      return "تم الإرسال";
+    } else {
+      return "غير معروف";
+    }
+  }
+
