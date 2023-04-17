@@ -7,7 +7,8 @@ import 'package:sakan/features/home/presentation/screens/house_image_screen.dart
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HouseSlider extends StatefulWidget {
-  const HouseSlider({super.key});
+  final List imgList;
+  const HouseSlider({required this.imgList, super.key});
 
   @override
   State<HouseSlider> createState() => _HouseSliderState();
@@ -16,12 +17,6 @@ class HouseSlider extends StatefulWidget {
 class _HouseSliderState extends State<HouseSlider> {
   @override
   Widget build(BuildContext context) {
-    List<String> imgList = [
-      "assets/images/room.png",
-      "assets/images/boarding3.png",
-      "assets/images/boarding2.png",
-      "assets/images/boarding1.png",
-    ];
     int currentIndex = 0;
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -29,9 +24,9 @@ class _HouseSliderState extends State<HouseSlider> {
         child: Column(
           children: [
             CarouselSlider.builder(
-              itemCount: imgList.length,
+              itemCount: widget.imgList.length,
               itemBuilder: (context, index, realIndex) {
-                final image = imgList[index];
+                final image = widget.imgList[index];
                 return Stack(
                   children: [
                     //image
@@ -41,7 +36,7 @@ class _HouseSliderState extends State<HouseSlider> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const HouseImageScreen()));
+                                    HouseImageScreen(image: image)));
                       },
                       child: Container(
                         height: 278.h,
@@ -49,7 +44,7 @@ class _HouseSliderState extends State<HouseSlider> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.fill,
-                            image: AssetImage(image),
+                            image: NetworkImage(image),
                           ),
                         ),
                       ),
@@ -91,7 +86,7 @@ class _HouseSliderState extends State<HouseSlider> {
               padding: const EdgeInsets.only(top: 12, bottom: 15),
               child: AnimatedSmoothIndicator(
                   activeIndex: currentIndex,
-                  count: imgList.length,
+                  count: widget.imgList.length,
                   effect: const ScrollingDotsEffect(
                     radius: 8,
                     spacing: 8,

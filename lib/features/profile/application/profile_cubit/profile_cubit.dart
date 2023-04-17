@@ -1,8 +1,11 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sakan/core/utils/functions/utils_functios.dart';
 import 'package:sakan/features/auth/data/model/user_model.dart';
+import 'package:sakan/features/form/data/model/house_model.dart';
 import 'package:sakan/features/profile/application/profile_cubit/profile_states.dart';
 
 class ProfileCubit extends Cubit<ProfileStates> {
@@ -76,5 +79,35 @@ class ProfileCubit extends Cubit<ProfileStates> {
     emit(ProfilePhotoURLState(photoUrl));
 
     //then i guess we need to update the model
+  }
+
+  Future getMyHouses() async {
+    emit(ProfileLoadingState());
+    try {
+      UserModel userModel = await getDataFromSharedPref();
+      final userId = userModel.userId;
+      List<HouseModel> houses = [];
+      // print(userId);
+      QuerySnapshot query = await _firestore
+          .collection("houses")
+          .where("userId", isEqualTo: userId)
+          .get();
+
+      if (query.docs.isNotEmpty) {
+        query.docs.map<List<HouseModel>>((e) {
+          final data = e.data() as Map<String, dynamic>;
+
+          final HouseModel houseModel = HouseModel.fromMap(data);
+          houses.add(houseModel);
+          return houses;
+        }).toList();
+
+        emit(MyHousesLoadedState(houses: houses));
+      } else {
+        emit(HousesIsEmptyState());
+      }
+    } catch (e) {
+      emit(ProfileErrorState(e.toString()));
+    }
   }
 }

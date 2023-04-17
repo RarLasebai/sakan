@@ -1,15 +1,16 @@
-import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakan/core/utils/colors/colors.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
+import 'package:sakan/features/form/application/form_cubit/form_cubit.dart';
 
-import 'radio_button_widget.dart';
+import 'form_radio_button_widget.dart';
 
 class ExpanTile extends StatefulWidget {
-  const ExpanTile(this.icon, this.color, this.title, this.subtitle, {Key? key})
+  const ExpanTile( this.color, this.title, this.subtitle, {required this.formCubit, Key? key})
       : super(key: key);
-  final String icon;
+  final FormCubit formCubit;
   final Color color;
   final String title;
   final String subtitle;
@@ -21,41 +22,44 @@ class ExpanTile extends StatefulWidget {
 class _ExpanTileState extends State<ExpanTile> {
   @override
   Widget build(BuildContext context) {
-    return ExpansionTileCard(
-      trailing: Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: darkGrey, width: 1.w),
-              borderRadius: BorderRadius.circular(35.r)),
-          child: const Padding(
-            padding: EdgeInsets.all(10),
-            child: Icon(
-              Icons.arrow_drop_down,
-              size: 13,
-            ),
-          )),
-      // contentPadding: const EdgeInsets.only(right: 24, left: 24),
-      elevation: 0.0,
-      borderRadius: BorderRadius.all(Radius.circular(15.0.r)),
-      leading: Container(
-          height: 60.h,
-          width: 60.w,
-          decoration: BoxDecoration(
-              color: const Color(0xffFFEEEA),
-              borderRadius: BorderRadius.circular(15.r)),
-          child: const Image(image: AssetImage("assets/icons/house.png"))),
-      title: TxtStyle(widget.title, 14, Colors.black, FontWeight.w400),
-      subtitle: TxtStyle(widget.subtitle, 14, darkGrey, FontWeight.w400),
-      children: const <Widget>[
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-              padding: EdgeInsets.only(
-                left: 6.0,
+    return Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        trailing: Container(
+            decoration: BoxDecoration(
+                border: Border.all(color: darkGrey, width: 1.w),
+                borderRadius: BorderRadius.circular(35.r)),
+            child: const Padding(
+              padding: EdgeInsets.all(10),
+              child: Icon(
+                Icons.arrow_drop_down,
+                size: 15,
+                color: primary,
               ),
-              child:
-                  RadioButton("شقة", "منزل دور أرضي", "منزل بدورين", "أخرى")),
-        ),
-      ],
+            )),
+        leading: Container(
+            height: 60.h,
+            width: 60.w,
+            decoration: BoxDecoration(
+                color: const Color(0xffFFEEEA),
+                borderRadius: BorderRadius.circular(15.r)),
+            child: const Image(image: AssetImage("assets/icons/house.png"))),
+        title: TxtStyle(widget.title, 14, Colors.black, FontWeight.w400),
+        subtitle: TxtStyle(widget.subtitle, 14, darkGrey, FontWeight.w400),
+        children:  <Widget>[
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 6.0,
+                ),
+                child: BlocProvider.value(
+                    value: widget.formCubit,
+                    child: FormRadioButton(
+                      formCubit: widget.formCubit,))),
+          ),
+        ],
+      ),
     );
   }
 }

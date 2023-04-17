@@ -1,7 +1,18 @@
+import 'dart:io';
+
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pinput/pinput.dart';
 import 'package:sakan/core/utils/colors/colors.dart';
 import 'package:sakan/core/utils/widgets/custom_button.dart';
+import 'package:sakan/core/utils/widgets/loading_widget.dart';
+import 'package:sakan/core/utils/widgets/show_toast.dart';
+import 'package:sakan/features/form/application/form_cubit/form_cubit.dart';
+import 'package:sakan/features/form/application/form_cubit/form_states.dart';
+import 'package:sakan/features/form/presentation/screens/map_picker_screen.dart';
+import 'package:sakan/features/form/presentation/widgets/add_photo_widget.dart';
 import 'package:sakan/features/form/presentation/widgets/expan_tile_widget.dart';
 import 'package:sakan/features/form/presentation/widgets/field_widget.dart';
 import 'package:sakan/features/form/presentation/widgets/success_dialog.dart';
@@ -13,98 +24,218 @@ class FormScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController costController = TextEditingController();
-    return SafeArea(
-        child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: SingleChildScrollView(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Center(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            child: TxtStyle(
-                                "تأجير سكن", 18, Colors.black, FontWeight.bold),
-                          ),
-                        ),
-                        SizedBox(height: 20.h),
-                        const ExpanTile("icon", softRed, "حدد نوع السكن",
-                            "حدد نوع السكن المراد عرضه"),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Column(
-                            children: [
-                              FieldWidget(
-                                  hint: "السعر",
-                                  icon: "cost.png",
-                                  controller: costController),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                child: FieldWidget(
-                                    hint: "اللون",
-                                    icon: "color.png",
-                                    controller: costController),
-                              ),
-                              FieldWidget(
-                                  hint: "الموقع",
-                                  icon: "location.png",
-                                  controller: costController),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                child: FieldWidget(
-                                    hint: "المنطقة",
-                                    icon: "loca.png",
-                                    controller: costController),
-                              ),
-                              Row(
+    return BlocProvider(
+      create: (context) => FormCubit(),
+      child: BlocConsumer<FormCubit, FormStates>(listener: (context, state) {
+        if (state is FormSentSuccessfuly) {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return const SuccessDialog();
+              });
+        }
+        if (state is FormErrorState) {
+          showToast(context, state.message);
+        }
+
+        if (state is PickingImageSuccessState) {
+          showToast(context, "تم تحديد الصور بنجاح!", color: Colors.green);
+        }
+        if (state is PickingImageErrorState) {
+          showToast(context, state.message);
+        }
+        if (state is HouseTypeErrorState) {
+          showToast(context, state.message);
+        }
+      }, builder: (context, state) {
+        FormCubit formCubit = FormCubit.get(context);
+
+        return Form(
+          key: formCubit.formDataKey,
+          child: SafeArea(
+              child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Padding(
+                      padding: EdgeInsets.only(
+                          right: 8,
+                          left: 8,
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Flexible(
+                              child: ListView(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 10),
-                                    child: Container(
-                                        height: 60.h,
-                                        width: 60.w,
-                                        decoration: BoxDecoration(
-                                            color: const Color(0xffFFEEEA),
-                                            borderRadius:
-                                                BorderRadius.circular(15.r)),
-                                        child: const Icon(
-                                            Icons.add_a_photo_outlined)),
+                                  const Center(
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 10),
+                                      child: TxtStyle("تأجير سكن", 18,
+                                          Colors.black, FontWeight.bold),
+                                    ),
                                   ),
-                                  const Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      TxtStyle("ارفع صور السكن", 14,
-                                          Colors.black, FontWeight.normal),
-                                      TxtStyle("اختر صوراً واضحة لرفعها", 12,
-                                          darkGrey, FontWeight.normal)
-                                    ],
-                                  )
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 20, bottom: 15),
+                                    child: ExpanTile(
+                                        formCubit: formCubit,
+                                        softRed,
+                                        "حدد نوع السكن",
+                                        "حدد نوع السكن المراد عرضه"),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
+                                    child: Column(
+                                      children: [
+                                        FieldWidget(
+                                            hint: "السعر",
+                                            icon: "cost.png",
+                                            isPrice: true,
+                                            controller:
+                                                formCubit.priceController),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10),
+                                          child: FieldWidget(
+                                              hint: "اللون",
+                                              icon: "color.png",
+                                              controller:
+                                                  formCubit.colorsController),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () => Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    BlocProvider.value(
+                                                        value: formCubit,
+                                                        child:
+                                                            const MapPickerScreen())),
+                                          ).then((value) {
+                                            String location =
+                                                formCubit.getLatLong();
+                                            formCubit.locationController
+                                                .setText(location);
+                                          }),
+                                          child: FieldWidget(
+                                              isLocation: true,
+                                              hint: "الموقع",
+                                              icon: "location.png",
+                                              controller:
+                                                  formCubit.locationController),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10),
+                                          child: FieldWidget(
+                                              hint: "المنطقة",
+                                              icon: "loca.png",
+                                              controller:
+                                                  formCubit.areaController),
+                                        ),
+                                        FieldWidget(
+                                            hint: "الوصف",
+                                            icon: "my_houses.png",
+                                            isDesc: true,
+                                            controller:
+                                                formCubit.descController),
+                                        Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                            child: ConditionalBuilder(
+                                                condition: state
+                                                    is! PickingImageLoadingState,
+                                                builder: (context) =>
+                                                    GestureDetector(
+                                                      onTap: () async {
+                                                        formCubit.imagesFile =
+                                                            await formCubit
+                                                                .pickMultiImages();
+                                                      },
+                                                      child:
+                                                          const AddPhotoWidget(),
+                                                    ),
+                                                fallback: (context) =>
+                                                    const LoadingWidget())),
+                                        ConditionalBuilder(
+                                            condition: state
+                                                is PickingImageSuccessState,
+                                            builder: (context) {
+                                              return SizedBox(
+                                                height: 180.h,
+                                                child: GridView.count(
+                                                  mainAxisSpacing: 12,
+                                                  crossAxisSpacing: 12,
+                                                  shrinkWrap: true,
+                                                  crossAxisCount: 2,
+                                                  children: [
+                                                    ...formCubit.imagesFile!
+                                                        .map(
+                                                            (image) =>
+                                                                Container(
+                                                                  decoration: BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(15
+                                                                              .r),
+                                                                      border: Border.all(
+                                                                          color:
+                                                                              primary,
+                                                                          width:
+                                                                              .3.w)),
+                                                                  height: 20.h,
+                                                                  width: 20.w,
+                                                                  child: Image.file(
+                                                                      File(image
+                                                                          .path)),
+                                                                ))
+                                                        .toList()
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                            fallback: (context) =>
+                                                const SizedBox())
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15),
+                                    child: Center(
+                                        child: ConditionalBuilder(
+                                            condition:
+                                                state is! FormLoadingState,
+                                            fallback: (context) =>
+                                                const LoadingWidget(),
+                                            builder: (context) {
+                                              return CustomButton(
+                                                  text: "أرسل النموذج",
+                                                  onTap: () {
+                                                    if (formCubit.formDataKey
+                                                            .currentState!
+                                                            .validate() &&
+                                                        formCubit.imagesFile !=
+                                                            null) {
+                                                      formCubit
+                                                          .saveHouseDataToFirebase(
+                                                              context);
+                                                    }
+                                                    if (formCubit.imagesFile ==
+                                                        null) {
+                                                      showToast(context,
+                                                          "لا يمكن إرسال النموذج بدون صور!");
+                                                    }
+                                                  });
+                                            })),
+                                  ),
                                 ],
                               ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          child: Center(
-                              child: CustomButton(
-                                  text: "أرسل النموذج",
-                                  onTap: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return const SuccessDialog();
-                                        });
-                                  })),
-                        )
-                      ]),
-                ))));
+                            )
+                          ])))),
+        );
+      }),
+    );
   }
 }

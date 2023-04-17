@@ -23,7 +23,7 @@ class EditPersonalDataScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: profileCubit,
+      value: BlocProvider.of<ProfileCubit>(context),
       child:
           BlocConsumer<ProfileCubit, ProfileStates>(listener: (context, state) {
         if (state is NoDataChangedState) {
