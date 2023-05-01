@@ -56,7 +56,8 @@ class DetailsScreen extends StatelessWidget {
                                   color: primary,
                                 ),
                                 TxtStyle("الموقع: ${houseModel.houseLocation}",
-                                    12, darkGrey, FontWeight.normal),
+                                    12, darkGrey, FontWeight.normal,
+                                    textDecoration: TextDecoration.underline),
                               ],
                             ),
                           ),
@@ -164,6 +165,4 @@ class DetailsScreen extends StatelessWidget {
       ),
     );
   }
-
- 
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
@@ -114,10 +116,11 @@ class FormScreen extends StatelessWidget {
                                                         child:
                                                             const MapPickerScreen())),
                                           ).then((value) {
-                                            String location =
-                                                formCubit.getLatLong();
+                                            String location = value;
                                             formCubit.locationController
                                                 .setText(location);
+                                            print(value);
+                                            print(location);
                                           }),
                                           child: FieldWidget(
                                               isLocation: true,
