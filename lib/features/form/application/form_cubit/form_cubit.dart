@@ -31,6 +31,7 @@ class FormCubit extends Cubit<FormStates> {
   GlobalKey<FormState> formDataKey = GlobalKey<FormState>();
   List<XFile>? imagesFile;
   LatLng? houseLocation;
+  String location = "";
   List<String> images = [];
   List<Marker> marker = <Marker>[
     Marker(
@@ -54,12 +55,12 @@ class FormCubit extends Cubit<FormStates> {
     emit(FormRadioButtonChangedState(value));
   }
 
-  String getLatLong() {
-    String lat = marker.first.point.latitude.toString();
-    String long = marker.first.point.longitude.toString();
+  String getLatLong(Marker newMarker) {
+    String lat = newMarker.point.latitude.toStringAsFixed(4);
+    String long = newMarker.point.longitude.toStringAsFixed(4);
 
     String location = "$lat, $long";
-
+    print("From getLatLong Function: $location");
     return location;
   }
 
@@ -68,7 +69,7 @@ class FormCubit extends Cubit<FormStates> {
     try {
       UserModel userModel = await getDataFromSharedPref();
       final userId = userModel.userId;
-      String location = getLatLong();
+      // String newLocation = location;
       //generating houseID
       final houseId = _firestore.collection("houses").doc();
       //upload images to firestore
@@ -92,7 +93,7 @@ class FormCubit extends Cubit<FormStates> {
             houseType: groupValue,
             date: date,
             houseImages: images,
-            houseLocation: location,
+            houseLocation: locationController.text,
             userId: userId);
 
         await _firestore

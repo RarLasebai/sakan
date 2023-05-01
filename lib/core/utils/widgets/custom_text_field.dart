@@ -16,7 +16,10 @@ class CustomTextField extends StatelessWidget {
       isPrice,
       isLocation;
   final VoidCallback? onTap;
+  // final VoidCallback? onChanged;
   final void Function()? suffixOnTap;
+  final void Function(String)? onChanged;
+
   final IconData suffixIcon;
 
   final FormFieldValidator<String> validator;
@@ -35,6 +38,7 @@ class CustomTextField extends StatelessWidget {
     this.isPrice = false,
     this.isLocation = false,
     this.onTap,
+    this.onChanged,
     this.width = 327,
     super.key,
   });
@@ -48,6 +52,7 @@ class CustomTextField extends StatelessWidget {
           padding:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: TextFormField(
+            onChanged: onChanged,
             readOnly: isLocation,
             maxLines: isDesc == true ? 5 : 1,
             obscureText: isPass,

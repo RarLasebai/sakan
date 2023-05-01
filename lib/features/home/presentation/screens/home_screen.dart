@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sakan/core/utils/colors/colors.dart';
+import 'package:sakan/core/utils/widgets/loading_widget.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
+import 'package:sakan/features/home/presentation/screens/details_screen.dart';
 import 'package:sakan/features/home/presentation/screens/search_screen.dart';
 import 'package:sakan/features/home/presentation/screens/view_more_screen.dart';
 import 'package:sakan/features/home/presentation/widgets/house_widget.dart';
 import 'package:sakan/features/home/presentation/widgets/search_button_widget.dart';
 
+import '../../application/homeCubit/home_cubit.dart';
+import '../../application/homeCubit/home_states.dart';
 import '../widgets/ads_slider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -18,8 +22,7 @@ class HomeScreen extends StatelessWidget {
       child: Padding(
           padding: const EdgeInsets.only(left: 24, right: 24),
           child: SingleChildScrollView(
-            // physics: const AlwaysScrollableScrollPhysics(
-            //     parent: BouncingScrollPhysics()),
+    
             child: Column(children: [
               //header
               Row(
@@ -50,7 +53,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
 
-              //ads
+              //ads - banners - slider OR Whatever!!!!
               const Padding(
                 padding: EdgeInsets.only(top: 25.0),
                 child: AdsSlider(),
@@ -78,27 +81,42 @@ class HomeScreen extends StatelessWidget {
                       ))
                 ],
               ),
-              //Last Houses Added widget
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    const HouseWidget(),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    const HouseWidget(),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    const HouseWidget(),
-                  ],
-                ),
-              ),
 
-              SizedBox(
-                height: 7.h,
-              )
+              //Last Houses Added widget
+              BlocProvider(
+                create: (context) => HomeCubit()..getLatestHouses(),
+                child: BlocConsumer<HomeCubit, HomeStates>(
+                    listener: (context, state) {},
+                    builder: (context, homeState) {
+                      if (homeState is HomeLoadingState) {
+                        return const LoadingWidget();
+                      } else if (homeState is LatestHousesLoadedState) {
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              ...homeState.houses
+                                  .map((house) => GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DetailsScreen(
+                                                        houseModel: house)));
+                                      },
+                                      child: HouseWidget(houseModel: house)))
+                                  .toList()
+                            ],
+                          ),
+                        );
+                      } else {
+                        return const Center(
+                            child: TxtStyle("حدث خطأ في تحميل المساكن", 12,
+                                Colors.red, FontWeight.bold));
+                      }
+                    }),
+              ),
             ]),
           )),
     );

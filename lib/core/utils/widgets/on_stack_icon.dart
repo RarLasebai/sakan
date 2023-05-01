@@ -22,7 +22,7 @@ class OnStackIcon extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           child: Icon(
             isFav ? Icons.favorite : Icons.arrow_back_ios_new,
-            color: isFav ? darkRed : darkGrey.withOpacity(.5),
+            color: isFav ? darkRed : Colors.black54,
             size: 20,
           ),
         ),

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -35,6 +37,7 @@ class MapPickerScreen extends StatelessWidget {
                             formCubit.marker.clear();
 
                             formCubit.houseLocation = point;
+                            print(point);
                             formCubit.marker.add(Marker(
                               point: LatLng(point.latitude, point.longitude),
                               builder: (BuildContext context) {
@@ -45,7 +48,11 @@ class MapPickerScreen extends StatelessWidget {
                                 );
                               },
                             ));
-                            showToast(context, "تم التحديد",
+                            formCubit.location =
+                                formCubit.getLatLong(formCubit.marker.first);
+                            print(formCubit.marker.first.point.latitude);
+                            print("NEW LOCATION${formCubit.location}");
+                            showToast(context, "تم التحديد، اضغط زر الحفظ",
                                 color: Colors.green);
                           },
                           center: LatLng(
@@ -71,7 +78,8 @@ class MapPickerScreen extends StatelessWidget {
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                   border: Border.all(color: primary),
-                                  color: const Color.fromARGB(172, 255, 255, 255),
+                                  color:
+                                      const Color.fromARGB(172, 255, 255, 255),
                                   borderRadius: BorderRadius.circular(15.r)),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -81,8 +89,14 @@ class MapPickerScreen extends StatelessWidget {
                                     color: primary,
                                   ),
                                   SizedBox(width: 3.w),
-                                  const TxtStyle("اضغط مطوّلاً لتحديد موقع السكن", 12,
-                                      primary, FontWeight.bold),
+                                  const TxtStyle(
+                                    " اضغط مطوّلاً لتحديد موقع السكن\n ثم اضغط على زر الحفظ",
+                                    12,
+                                    primary,
+                                    FontWeight.bold,
+                                    textAlignm: TextAlign.center,
+                                    longText: true,
+                                  ),
                                 ],
                               )),
                           Align(
@@ -93,7 +107,8 @@ class MapPickerScreen extends StatelessWidget {
                                     if (formCubit.houseLocation == null) {
                                       showToast(context, "حدد موقع السكن");
                                     } else {
-                                      Navigator.pop(context);
+                                      Navigator.pop(
+                                          context, formCubit.location);
                                     }
                                   })),
                         ],
