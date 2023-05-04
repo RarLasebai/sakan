@@ -67,12 +67,8 @@ class BoardItemWidget extends StatelessWidget {
                 activeDotColor: primary,
               )),
         ),
-        TxtStyle(
-          boardingModel.title,
-          24,
-          darkRed,
-          FontWeight.bold,
-        ),
+        TxtStyle(boardingModel.title, 24, darkRed, FontWeight.bold,
+            textAlignm: TextAlign.center),
         TxtStyle(
           boardingModel.description,
           18,

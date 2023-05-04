@@ -75,7 +75,7 @@ class _BoardingScreenState extends State<BoardingScreen> {
                     (Route<dynamic> route) => false);
               } else {
                 boardingController.nextPage(
-                    duration: const Duration(milliseconds: 750),
+                    duration: const Duration(milliseconds: 600),
                     curve: Curves.easeIn);
               }
             },

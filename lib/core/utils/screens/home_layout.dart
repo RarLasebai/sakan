@@ -41,12 +41,7 @@ class HomeLayout extends StatelessWidget {
                     width: MediaQuery.of(context).size.width.sp,
                     child: Theme(
                       data: Theme.of(context).copyWith(
-                        // sets the background color of the `BottomNavigationBar`
                         canvasColor: secondaryGrey,
-                        // sets the active color of the `BottomNavigationBar` if `Brightness` is light
-                        // primaryColor: Colors.red,
-                        // textTheme: Theme.of(context).textTheme.copyWith(
-                        //     caption: new TextStyle(color: Colors.yellow)),
                       ),
                       child: BottomNavigationBar(
                         elevation: 0,
