@@ -35,6 +35,16 @@ class FormRadioButton extends StatelessWidget {
             ),
             CustomRadioButton(
               groupValue: formCubit.groupValue,
+              title: "شاليه",
+              onChanged: (_) => formCubit.houseTypeOnChanged("منزل بدورين"),
+            ),
+            CustomRadioButton(
+              groupValue: formCubit.groupValue,
+              title: "جاراج",
+              onChanged: (_) => formCubit.houseTypeOnChanged("منزل بدورين"),
+            ),
+            CustomRadioButton(
+              groupValue: formCubit.groupValue,
               title: "أخرى",
               onChanged: (_) => formCubit.houseTypeOnChanged("أخرى"),
             ),

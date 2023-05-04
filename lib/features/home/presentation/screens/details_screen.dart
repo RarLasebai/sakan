@@ -21,7 +21,8 @@ class DetailsScreen extends StatelessWidget {
           textDirection: TextDirection.rtl,
           child: Column(
             children: [
-              HouseSlider(imgList: houseModel.houseImages),
+              HouseSlider(
+                  imgList: houseModel.houseImages, houseId: houseModel.houseId),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(right: 18, left: 18),
