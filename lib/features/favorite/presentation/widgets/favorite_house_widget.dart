@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakan/core/utils/colors/colors.dart';
@@ -16,7 +17,9 @@ class FavoriteHouseWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         decoration: BoxDecoration(
-            color: secondaryGrey, borderRadius: BorderRadius.circular(15.r)),
+            color: softGrey,
+            borderRadius: BorderRadius.circular(15.r),
+            border: Border.all(color: softRed)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -39,7 +42,7 @@ class FavoriteHouseWidget extends StatelessWidget {
                       ),
                     ),
                     //fav icon
-                     const OnStackIcon(isFav: true, isFavScreen: true),
+                    const OnStackIcon(isFav: true, isFavScreen: true),
                   ],
                 ),
               ),
@@ -59,11 +62,28 @@ class FavoriteHouseWidget extends StatelessWidget {
                     Row(
                       children: [
                         const Icon(
-                          Icons.location_on,
-                          color: primary,
+                          Icons.star,
+                          color: Colors.amber,
                         ),
-                        TxtStyle("الموقع: ${houseModel.houseLocation}", 12,
-                            darkGrey, FontWeight.normal),
+                        RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              fontFamily: 'Changa',
+                              fontWeight: FontWeight.normal,
+                              fontSize: 16.sp,
+                              color: darkGrey,
+                            ),
+                            children: <TextSpan>[
+                              const TextSpan(text: "التقييم: "),
+                              TextSpan(
+                                  text: " 75%",
+                                  style: TextStyle(
+                                      color: primary,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        )
                       ],
                     ),
 

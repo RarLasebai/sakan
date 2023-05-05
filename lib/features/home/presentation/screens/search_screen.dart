@@ -47,7 +47,7 @@ class SearchScreen extends StatelessWidget {
                             child: SizedBox(
                               height: 50.h,
                               child: CustomTextField(
-                                hint: "أدخل كلمة البحث",
+                                hint: "أدخل رقماً أو حرفاً..",
                                 controller: searchCubit.searchController,
                                 onChanged: ((text) => searchCubit.searchHouse(
                                     text, searchCubit.allHouses!)),

@@ -74,16 +74,35 @@ class HouseWidget extends StatelessWidget {
                             "${houseModel.houseType} - ${houseModel.houseArea}",
                             16,
                             Colors.black,
-                            FontWeight.bold),
-
+                            FontWeight.bold,
+                            longText: true,
+                          ),
+//rating
                     Row(
                       children: [
                         const Icon(
-                          Icons.location_on,
-                          color: primary,
+                          Icons.star,
+                          color: Colors.amber,
                         ),
-                        TxtStyle("الموقع: ${houseModel.houseLocation}", 12,
-                            darkGrey, FontWeight.normal),
+                        RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              fontFamily: 'Changa',
+                              fontWeight: FontWeight.normal,
+                              fontSize: 16.sp,
+                              color: darkGrey,
+                            ),
+                            children: <TextSpan>[
+                              const TextSpan(text: "التقييم: "),
+                              TextSpan(
+                                  text: " 75%",
+                                  style: TextStyle(
+                                      color: primary,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        )
                       ],
                     ),
 

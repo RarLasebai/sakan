@@ -18,7 +18,9 @@ class MyHouseWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         decoration: BoxDecoration(
-            color: secondaryGrey, borderRadius: BorderRadius.circular(15.r)),
+            color: softGrey,
+            borderRadius: BorderRadius.circular(15.r),
+            border: Border.all(color: softRed)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -47,14 +49,32 @@ class MyHouseWidget extends StatelessWidget {
                         16,
                         Colors.black,
                         FontWeight.bold),
+                    //rating
                     Row(
                       children: [
                         const Icon(
-                          Icons.location_on,
-                          color: primary,
+                          Icons.star,
+                          color: Colors.amber,
                         ),
-                        TxtStyle("الموقع: ${houseModel.houseLocation}", 13,
-                            darkGrey, FontWeight.normal),
+                        RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              fontFamily: 'Changa',
+                              fontWeight: FontWeight.normal,
+                              fontSize: 16.sp,
+                              color: darkGrey,
+                            ),
+                            children: <TextSpan>[
+                              const TextSpan(text: "التقييم: "),
+                              TextSpan(
+                                  text: " 75%",
+                                  style: TextStyle(
+                                      color: primary,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        )
                       ],
                     ),
 

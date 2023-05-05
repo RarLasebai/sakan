@@ -27,7 +27,12 @@ class FieldWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   color: const Color(0xffFFEEEA),
                   borderRadius: BorderRadius.circular(15.r)),
-              child: Image(image: AssetImage("assets/icons/$icon"))),
+              child: hint == "أقل مدة للإيجار"
+                  ? const Icon(
+                      Icons.calendar_month_sharp,
+                      color: Colors.brown,
+                    )
+                  : Image(image: AssetImage("assets/icons/$icon"))),
         ),
         Expanded(
           child: CustomTextField(
