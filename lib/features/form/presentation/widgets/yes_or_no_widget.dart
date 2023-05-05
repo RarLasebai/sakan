@@ -4,8 +4,10 @@ import 'package:sakan/core/utils/widgets/txt_style.dart';
 import 'package:sakan/features/auth/presentation/widgets/radio_button_widget.dart';
 
 class YesOrNoWidget extends StatelessWidget {
-  final String title;
-  const YesOrNoWidget({required this.title, super.key});
+  final String title, groupValue;
+    final void Function(Object?)? onChanged;
+
+  const YesOrNoWidget({required this.title, required this.groupValue, required this.onChanged, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +25,14 @@ class YesOrNoWidget extends StatelessWidget {
             ],
           ),
           CustomRadioButton(
-            groupValue: "formCubit.groupValue,",
-            onChanged: (_) {
-              // formCubit.houseTypeOnChanged("شقة")
-            },
+            groupValue: groupValue,
+            onChanged: onChanged,
             title: "نعم",
           ),
           CustomRadioButton(
-            groupValue: "formCubit.groupValue",
+            groupValue: groupValue,
             title: "لا",
-            onChanged: (_) {
-              // formCubit.houseTypeOnChanged("منزل أرضي")
-            },
+            onChanged: onChanged,
           ),
         ]));
   }

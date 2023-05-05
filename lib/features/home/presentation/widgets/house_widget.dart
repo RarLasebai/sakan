@@ -93,9 +93,10 @@ class HouseWidget extends StatelessWidget {
                               color: darkGrey,
                             ),
                             children: <TextSpan>[
-                              const TextSpan(text: "التقييم: "),
+                              const TextSpan(text: "الجودة: "),
                               TextSpan(
-                                  text: " 75%",
+                                  text:
+                                      "${houseModel.numberOfStars.toString()} نجوم",
                                   style: TextStyle(
                                       color: primary,
                                       fontSize: 16.sp,

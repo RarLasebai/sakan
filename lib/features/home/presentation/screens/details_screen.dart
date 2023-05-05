@@ -74,7 +74,7 @@ class DetailsScreen extends StatelessWidget {
 
                         //rate
 
-                        RatingWidget(),
+                        RatingWidget(stars: houseModel.numberOfStars),
                         Divider(),
                         //date
                         Padding(
@@ -91,8 +91,11 @@ class DetailsScreen extends StatelessWidget {
                                   ),
                                   Align(
                                       alignment: Alignment.topRight,
-                                      child: TxtStyle(houseModel.houseColors,
-                                          12, darkGrey, FontWeight.bold)),
+                                      child: TxtStyle(
+                                          "${houseModel.minRentPeriod.toString()} أشهر",
+                                          12,
+                                          darkGrey,
+                                          FontWeight.bold)),
                                 ],
                               ),
                               houseModel.houseState != "accepted"
@@ -131,17 +134,17 @@ class DetailsScreen extends StatelessWidget {
                               SizedBox(width: 5.w),
                               PropsWidget(
                                   title: "عدد\n الغرف",
-                                  subTitle: houseModel.houseColors,
+                                  subTitle: houseModel.roomsCount.toString(),
                                   icon: "rooms"),
                               SizedBox(width: 5.w),
                               PropsWidget(
                                   title: "عدد \nالمطابخ",
-                                  subTitle: houseModel.houseColors,
+                                  subTitle: houseModel.kitchenCount.toString(),
                                   icon: "kitchen"),
                               SizedBox(width: 5.w),
                               PropsWidget(
                                   title: "عدد\n الحمامات",
-                                  subTitle: houseModel.houseColors,
+                                  subTitle: houseModel.toiletCount.toString(),
                                   icon: "toilet"),
                             ],
                           ),
@@ -159,22 +162,28 @@ class DetailsScreen extends StatelessWidget {
                             children: [
                               PropsWidget(
                                   title: "أثاث \nالسكن",
-                                  subTitle: "نعم",
+                                  subTitle: houseModel.furniture
+                                      ? "متوفر"
+                                      : "غير متوفر",
                                   icon: "f"),
                               SizedBox(width: 5.w),
                               PropsWidget(
                                   title: "اتصال \nإنترنت",
-                                  subTitle: "نعم",
+                                  subTitle:
+                                      houseModel.wifi ? "متوفر" : "غير متوفر",
                                   icon: "wifi"),
                               SizedBox(width: 5.w),
                               PropsWidget(
                                   title: "فاتورة \nالمياه",
-                                  subTitle: "نعم",
+                                  subTitle: houseModel.water
+                                      ? "مدفوعة"
+                                      : "غير مدفوعة",
                                   icon: "water"),
                               SizedBox(width: 5.w),
                               PropsWidget(
                                   title: "فاتورة\n الكهرباء",
-                                  subTitle: "لا",
+                                  subTitle:
+                                      houseModel.elec ? "مدفوعة" : "غير مدفوعة",
                                   icon: "elec"),
                             ],
                           ),

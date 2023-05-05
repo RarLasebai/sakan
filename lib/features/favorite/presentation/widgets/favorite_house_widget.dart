@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakan/core/utils/colors/colors.dart';
@@ -74,9 +73,10 @@ class FavoriteHouseWidget extends StatelessWidget {
                               color: darkGrey,
                             ),
                             children: <TextSpan>[
-                              const TextSpan(text: "التقييم: "),
+                              const TextSpan(text: "الجودة: "),
                               TextSpan(
-                                  text: " 75%",
+                                  text:
+                                      "${houseModel.numberOfStars.toString()} نجوم",
                                   style: TextStyle(
                                       color: primary,
                                       fontSize: 16.sp,

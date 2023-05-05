@@ -4,11 +4,13 @@ import 'package:sakan/core/utils/widgets/custom_text_field.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 
 class RoomsCountTextField extends StatelessWidget {
-  const RoomsCountTextField({super.key});
+ final TextEditingController roomsController;
+ final TextEditingController kitchenController;
+ final TextEditingController toiletController;
+  const RoomsCountTextField({required this.kitchenController, required this.roomsController, required this.toiletController, super.key});
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController c = TextEditingController();
     return Column(
       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -29,7 +31,7 @@ class RoomsCountTextField extends StatelessWidget {
               height: 80.h,
               child: CustomTextField(
                   hint: "",
-                  controller: c,
+                  controller: roomsController,
                   isPrice: true,
                   validator: (validator) {
                     if (validator == null || validator.isEmpty) {
@@ -60,7 +62,7 @@ class RoomsCountTextField extends StatelessWidget {
               height: 80.h,
               child: CustomTextField(
                   hint: "",
-                  controller: c,
+                  controller: toiletController,
                   isPrice: true,
                   validator: (validator) {
                     if (validator == null || validator.isEmpty) {
@@ -91,7 +93,7 @@ class RoomsCountTextField extends StatelessWidget {
               height: 80.h,
               child: CustomTextField(
                   hint: "",
-                  controller: c,
+                  controller: kitchenController,
                   isPrice: true,
                   validator: (validator) {
                     if (validator == null || validator.isEmpty) {

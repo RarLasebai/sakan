@@ -146,8 +146,8 @@ class FormScreen extends StatelessWidget {
                                             hint: "أقل مدة للإيجار",
                                             icon: "my_houses.png",
                                             isPrice: true,
-                                            controller:
-                                                formCubit.descController),
+                                            controller: formCubit
+                                                .minRentPeriodController),
                                         SizedBox(height: 10.h),
                                         FieldWidget(
                                             hint: "الوصف",
@@ -223,27 +223,52 @@ class FormScreen extends StatelessWidget {
                                               Colors.black, FontWeight.bold),
                                         ),
                                         //Rooms
-                                        const RoomsCountTextField(),
+                                        RoomsCountTextField(
+                                            kitchenController:
+                                                formCubit.kitchenController,
+                                            roomsController:
+                                                formCubit.roomsController,
+                                            toiletController:
+                                                formCubit.toiletController),
 
-                                        //fo
-                                        const YesOrNoWidget(
-                                            title:
-                                                "هل السكن يتضمن الأثاث -مؤثث-؟"),
+                                        //furniture
+                                        YesOrNoWidget(
+                                          title:
+                                              "هل السكن يتضمن الأثاث -مؤثث-؟",
+                                          groupValue:
+                                              formCubit.furnitureGroupValue,
+                                          onChanged: (value) => formCubit
+                                              .furnitureOnChanged(value),
+                                        ),
 
                                         //elec
-                                        const YesOrNoWidget(
-                                            title:
-                                                "هل تكاليف فاتورة الكهرباء مدفوعة؟"),
+                                        YesOrNoWidget(
+                                          title:
+                                              "هل تكاليف فاتورة الكهرباء مدفوعة؟",
+                                          groupValue: formCubit.elecGroupValue,
+                                          onChanged: (value) =>
+                                              formCubit.elecOnChanged(value),
+                                        ),
 
                                         //water
-                                        const YesOrNoWidget(
-                                            title:
-                                                "هل تكاليف فاتورة المياه مدفوعة؟"),
+                                        YesOrNoWidget(
+                                          title:
+                                              "هل تكاليف فاتورة المياه مدفوعة؟",
+                                          groupValue: formCubit.waterGroupValue,
+                                          onChanged: (value) =>
+                                              formCubit.waterOnChanged(value),
+                                        ),
 
                                         //wifi
-                                        const YesOrNoWidget(
+                                        YesOrNoWidget(
                                             title:
-                                                "هل يوجد اتصال إنترنت مجاني؟"),
+                                                "هل يوجد اتصال إنترنت مجاني؟",
+                                            groupValue:
+                                                formCubit.wifiGroupValue,
+                                            onChanged: (value) {
+                                              formCubit.wifiOnChanged(value);
+                                              print(value);
+                                            }),
 
                                         ///////////////////////////////////////////////////
                                       ],
