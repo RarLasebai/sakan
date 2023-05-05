@@ -17,9 +17,12 @@ import 'package:sakan/features/form/presentation/screens/map_picker_screen.dart'
 import 'package:sakan/features/form/presentation/widgets/add_photo_widget.dart';
 import 'package:sakan/features/form/presentation/widgets/expan_tile_widget.dart';
 import 'package:sakan/features/form/presentation/widgets/field_widget.dart';
+import 'package:sakan/features/form/presentation/widgets/roles_widget.dart';
+import 'package:sakan/features/form/presentation/widgets/rooms_count_text_field.dart';
 import 'package:sakan/features/form/presentation/widgets/success_dialog.dart';
 
 import '../../../../core/utils/widgets/txt_style.dart';
+import '../widgets/yes_or_no_widget.dart';
 
 class FormScreen extends StatelessWidget {
   const FormScreen({super.key});
@@ -77,6 +80,7 @@ class FormScreen extends StatelessWidget {
                                           Colors.black, FontWeight.bold),
                                     ),
                                   ),
+                                  const RolesWidget(),
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         top: 20, bottom: 15),
@@ -139,6 +143,13 @@ class FormScreen extends StatelessWidget {
                                                   formCubit.areaController),
                                         ),
                                         FieldWidget(
+                                            hint: "أقل مدة للإيجار",
+                                            icon: "my_houses.png",
+                                            isPrice: true,
+                                            controller:
+                                                formCubit.descController),
+                                        SizedBox(height: 10.h),
+                                        FieldWidget(
                                             hint: "الوصف",
                                             icon: "my_houses.png",
                                             isDesc: true,
@@ -199,7 +210,42 @@ class FormScreen extends StatelessWidget {
                                               );
                                             },
                                             fallback: (context) =>
-                                                const SizedBox())
+                                                const SizedBox()),
+                                        ////////////////////
+
+                                        const Divider(
+                                          color: primary,
+                                        ),
+
+                                        const Align(
+                                          alignment: Alignment.centerRight,
+                                          child: TxtStyle("معلومات إضافية", 13,
+                                              Colors.black, FontWeight.bold),
+                                        ),
+                                        //Rooms
+                                        const RoomsCountTextField(),
+
+                                        //fo
+                                        const YesOrNoWidget(
+                                            title:
+                                                "هل السكن يتضمن الأثاث -مؤثث-؟"),
+
+                                        //elec
+                                        const YesOrNoWidget(
+                                            title:
+                                                "هل تكاليف فاتورة الكهرباء مدفوعة؟"),
+
+                                        //water
+                                        const YesOrNoWidget(
+                                            title:
+                                                "هل تكاليف فاتورة المياه مدفوعة؟"),
+
+                                        //wifi
+                                        const YesOrNoWidget(
+                                            title:
+                                                "هل يوجد اتصال إنترنت مجاني؟"),
+
+                                        ///////////////////////////////////////////////////
                                       ],
                                     ),
                                   ),

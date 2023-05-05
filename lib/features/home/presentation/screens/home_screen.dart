@@ -22,7 +22,6 @@ class HomeScreen extends StatelessWidget {
       child: Padding(
           padding: const EdgeInsets.only(left: 24, right: 24),
           child: SingleChildScrollView(
-    
             child: Column(children: [
               //header
               Row(
@@ -60,26 +59,10 @@ class HomeScreen extends StatelessWidget {
               ),
 
               //Last Houses Added header
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const TxtStyle(
-                      "آخر المساكن المضافة", 18, Colors.black, FontWeight.bold),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const ViewMoreScreen()));
-                      },
-                      child: const TxtStyle(
-                        "عرض المزيد",
-                        13,
-                        darkGrey,
-                        FontWeight.normal,
-                        textDecoration: TextDecoration.underline,
-                      ))
-                ],
+              const Align(
+                alignment: Alignment.centerRight,
+                child: TxtStyle(
+                    "آخر المساكن المضافة", 18, Colors.black, FontWeight.bold),
               ),
 
               //Last Houses Added widget
@@ -92,8 +75,8 @@ class HomeScreen extends StatelessWidget {
                         return const LoadingWidget();
                       } else if (homeState is LatestHousesLoadedState) {
                         return SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
+                          physics: const ClampingScrollPhysics(),
+                          child: Column(
                             children: [
                               ...homeState.houses
                                   .map((house) => GestureDetector(
@@ -106,7 +89,22 @@ class HomeScreen extends StatelessWidget {
                                                         houseModel: house)));
                                       },
                                       child: HouseWidget(houseModel: house)))
-                                  .toList()
+                                  .toList(),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ViewMoreScreen()));
+                                  },
+                                  child: const TxtStyle(
+                                    "عرض المزيد",
+                                    13,
+                                    primary,
+                                    FontWeight.normal,
+                                    textDecoration: TextDecoration.underline,
+                                  ))
                             ],
                           ),
                         );

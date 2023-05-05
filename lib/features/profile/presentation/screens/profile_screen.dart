@@ -8,7 +8,7 @@ import 'package:sakan/features/auth/data/model/user_model.dart';
 import 'package:sakan/features/auth/presentation/screens/restore_password_screen.dart';
 import 'package:sakan/features/profile/application/profile_cubit/profile_cubit.dart';
 import 'package:sakan/features/profile/application/profile_cubit/profile_states.dart';
-import 'package:sakan/features/profile/presentation/screens/contcat_us_screen.dart';
+import 'package:sakan/features/profile/presentation/screens/roles_screen.dart';
 import 'package:sakan/features/profile/presentation/screens/edit_personal_data_screen.dart';
 import 'package:sakan/features/profile/presentation/screens/my_houses_screen.dart';
 import 'package:sakan/features/profile/presentation/widgets/profile_header_widget.dart';
@@ -111,14 +111,13 @@ class ProfileScreen extends StatelessWidget {
 
                       //تواصل معنا
                       ProfileListTileWidget(
-                          title: "تواصل معنا",
+                          title: "الشروط والأحكام",
                           icon: "hint.png",
                           onTap: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ContactUsScreen()));
+                                    builder: (context) => const RolesScreen()));
                           }),
 
                       //تسجيل الخروج

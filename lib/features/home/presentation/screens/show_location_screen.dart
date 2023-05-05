@@ -7,7 +7,9 @@ import '../../../../core/utils/widgets/top_nav_bar.dart';
 
 class ShowLocationScreen extends StatelessWidget {
   final String latlng;
-  const ShowLocationScreen({required this.latlng, super.key});
+  final bool isFullScreen;
+  const ShowLocationScreen(
+      {required this.latlng, this.isFullScreen = true, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class ShowLocationScreen extends StatelessWidget {
     final double long = double.parse(substrings[1]);
 
     return Scaffold(
-        appBar: TopNavBar("موقع السكن"),
+        appBar: isFullScreen ? TopNavBar("موقع السكن") : null,
         body: Stack(
           children: [
             FlutterMap(

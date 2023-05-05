@@ -1,5 +1,6 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sakan/core/utils/functions/utils_functios.dart';
 import 'package:sakan/features/auth/data/model/user_model.dart';
@@ -34,11 +35,11 @@ class FavoriteCubit extends Cubit<FavoriteStates> {
           await _firestore.collection("users").doc(user.userId).get();
 
       List ids = userFields.get("favHouses");
-      print(ids);
+      // print(ids);
 
       try {
         List<HouseModel> houses = [];
-        if (ids.length == 0) {
+        if (ids.isEmpty) {
           emit(FavoriteHousesEmptyState());
         } else {
           for (int i = 0; i < ids.length; i++) {

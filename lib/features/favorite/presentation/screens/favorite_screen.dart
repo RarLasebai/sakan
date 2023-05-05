@@ -1,13 +1,12 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakan/core/utils/colors/colors.dart';
 import 'package:sakan/core/utils/widgets/empty_data_widget.dart';
 import 'package:sakan/core/utils/widgets/loading_widget.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 import 'package:sakan/features/auth/application/auth_cubit/auth_cubit.dart';
 import 'package:sakan/features/auth/application/auth_cubit/auth_states.dart';
-import 'package:sakan/features/auth/data/model/user_model.dart';
 import 'package:sakan/features/favorite/application/favoriteCubit/favorite_cubit.dart';
 import 'package:sakan/features/favorite/application/favoriteCubit/favorite_states.dart';
 import 'package:sakan/features/favorite/presentation/widgets/favorite_house_widget.dart';
@@ -21,9 +20,7 @@ class FavoriteScreen extends StatelessWidget {
     return BlocConsumer<AuthCubit, AuthStates>(
         listener: (context, state) {},
         builder: (context, state) {
-          AuthCubit authCubit = AuthCubit.get(context);
           if (state is AuthGetUser) {
-            UserModel user = state.userModel;
 
             return SafeArea(
               child: Padding(

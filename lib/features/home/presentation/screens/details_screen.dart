@@ -8,6 +8,9 @@ import 'package:sakan/core/utils/widgets/txt_style.dart';
 import 'package:sakan/features/form/data/model/house_model.dart';
 import 'package:sakan/features/home/presentation/screens/show_location_screen.dart';
 import 'package:sakan/features/home/presentation/widgets/house_slider.dart';
+import 'package:sakan/features/home/presentation/widgets/map_widget.dart';
+import 'package:sakan/features/home/presentation/widgets/props_widget.dart';
+import 'package:sakan/features/home/presentation/widgets/rating_widget.dart';
 
 class DetailsScreen extends StatelessWidget {
   final HouseModel houseModel;
@@ -21,8 +24,6 @@ class DetailsScreen extends StatelessWidget {
           textDirection: TextDirection.rtl,
           child: Column(
             children: [
-              HouseSlider(
-                  imgList: houseModel.houseImages, houseId: houseModel.houseId),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(right: 18, left: 18),
@@ -30,6 +31,10 @@ class DetailsScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        HouseSlider(
+                            imgList: houseModel.houseImages,
+                            houseId: houseModel.houseId),
+
                         //house type
                         Align(
                           alignment: Alignment.centerRight,
@@ -37,7 +42,8 @@ class DetailsScreen extends StatelessWidget {
                               "${houseModel.houseType} - ${houseModel.houseArea}",
                               16,
                               Colors.black,
-                              FontWeight.bold),
+                              FontWeight.bold,
+                              longText: true),
                         ),
                         //location
                         GestureDetector(
@@ -63,49 +69,126 @@ class DetailsScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                        //map widget
+                        MapWidget(latlng: houseModel.houseLocation),
 
-                        //color and date
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                const Align(
-                                  alignment: Alignment.topRight,
-                                  child: TxtStyle("اللون", 16, Colors.black,
-                                      FontWeight.bold),
-                                ),
-                                Align(
+                        //rate
+
+                        RatingWidget(),
+                        Divider(),
+                        //date
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                children: [
+                                  const Align(
                                     alignment: Alignment.topRight,
-                                    child: TxtStyle(houseModel.houseColors, 12,
-                                        darkGrey, FontWeight.bold)),
-                              ],
-                            ),
-                            houseModel.houseState != "accepted"
-                                ? SizedBox()
-                                : Column(
-                                    children: [
-                                      const Align(
-                                        alignment: Alignment.topRight,
-                                        child: TxtStyle("تاريخ العرض", 16,
-                                            Colors.black, FontWeight.bold),
-                                      ),
-                                      Align(
-                                          alignment: Alignment.topRight,
-                                          child: TxtStyle(houseModel.date, 12,
-                                              darkGrey, FontWeight.bold)),
-                                    ],
+                                    child: TxtStyle("أقل مدة للإيجار", 14,
+                                        Colors.black, FontWeight.bold),
                                   ),
-                          ],
+                                  Align(
+                                      alignment: Alignment.topRight,
+                                      child: TxtStyle(houseModel.houseColors,
+                                          12, darkGrey, FontWeight.bold)),
+                                ],
+                              ),
+                              houseModel.houseState != "accepted"
+                                  ? SizedBox()
+                                  : Column(
+                                      children: [
+                                        const Align(
+                                          alignment: Alignment.topRight,
+                                          child: TxtStyle("تاريخ العرض", 14,
+                                              Colors.black, FontWeight.bold),
+                                        ),
+                                        Align(
+                                            alignment: Alignment.topRight,
+                                            child: TxtStyle(houseModel.date, 12,
+                                                darkGrey, FontWeight.bold)),
+                                      ],
+                                    ),
+                            ],
+                          ),
                         ),
+
+                        //props - مواصفات
+                        const Align(
+                          alignment: Alignment.topRight,
+                          child: TxtStyle(
+                              "مواصفات", 14, Colors.black, FontWeight.bold),
+                        ),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              PropsWidget(
+                                  title: "لون\nالسكن",
+                                  subTitle: houseModel.houseColors,
+                                  icon: "col"),
+                              SizedBox(width: 5.w),
+                              PropsWidget(
+                                  title: "عدد\n الغرف",
+                                  subTitle: houseModel.houseColors,
+                                  icon: "rooms"),
+                              SizedBox(width: 5.w),
+                              PropsWidget(
+                                  title: "عدد \nالمطابخ",
+                                  subTitle: houseModel.houseColors,
+                                  icon: "kitchen"),
+                              SizedBox(width: 5.w),
+                              PropsWidget(
+                                  title: "عدد\n الحمامات",
+                                  subTitle: houseModel.houseColors,
+                                  icon: "toilet"),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 15.h),
+                        //خدمات متوفرة
+                        const Align(
+                          alignment: Alignment.topRight,
+                          child: TxtStyle("خدمات متوفرة", 14, Colors.black,
+                              FontWeight.bold),
+                        ),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              PropsWidget(
+                                  title: "أثاث \nالسكن",
+                                  subTitle: "نعم",
+                                  icon: "f"),
+                              SizedBox(width: 5.w),
+                              PropsWidget(
+                                  title: "اتصال \nإنترنت",
+                                  subTitle: "نعم",
+                                  icon: "wifi"),
+                              SizedBox(width: 5.w),
+                              PropsWidget(
+                                  title: "فاتورة \nالمياه",
+                                  subTitle: "نعم",
+                                  icon: "water"),
+                              SizedBox(width: 5.w),
+                              PropsWidget(
+                                  title: "فاتورة\n الكهرباء",
+                                  subTitle: "لا",
+                                  icon: "elec"),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 15.h),
+
                         //description
                         Column(
                           // mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             const Align(
                               alignment: Alignment.topRight,
-                              child: TxtStyle(
-                                  "الوصف", 16, Colors.black, FontWeight.bold),
+                              child: TxtStyle("معلومات إضافية", 14,
+                                  Colors.black, FontWeight.bold),
                             ),
                             Align(
                                 alignment: Alignment.topRight,
