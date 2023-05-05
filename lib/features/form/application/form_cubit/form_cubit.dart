@@ -28,6 +28,10 @@ class FormCubit extends Cubit<FormStates> {
   TextEditingController locationController = TextEditingController();
   TextEditingController descController = TextEditingController();
   TextEditingController colorsController = TextEditingController();
+  TextEditingController roomsController = TextEditingController();
+  TextEditingController kitchenController = TextEditingController();
+  TextEditingController toiletController = TextEditingController();
+  TextEditingController minRentPeriodController = TextEditingController();
   GlobalKey<FormState> formDataKey = GlobalKey<FormState>();
   List<XFile>? imagesFile;
   LatLng? houseLocation;
@@ -45,15 +49,45 @@ class FormCubit extends Cubit<FormStates> {
       },
     )
   ];
-
+//Radio Buttons
   String groupValue = "";
+  String furnitureGroupValue = "";
+  String elecGroupValue = "";
+  String waterGroupValue = "";
+  String wifiGroupValue = "";
 
-//Functions
+//Radio button Functions
   houseTypeOnChanged(value) {
     groupValue = value;
     print(groupValue);
     emit(FormRadioButtonChangedState(value));
   }
+
+  furnitureOnChanged(value) {
+    furnitureGroupValue = value;
+    print(furnitureGroupValue);
+    emit(FormRadioButtonChangedState(value));
+  }
+
+  elecOnChanged(value) {
+    elecGroupValue = value;
+    print(elecGroupValue);
+    emit(FormRadioButtonChangedState(value));
+  }
+
+  waterOnChanged(value) {
+    waterGroupValue = value;
+    print(waterGroupValue);
+    emit(FormRadioButtonChangedState(value));
+  }
+
+  wifiOnChanged(value) {
+    wifiGroupValue = value;
+    print(wifiGroupValue);
+    emit(FormRadioButtonChangedState(value));
+  }
+
+  /////////////////////
 
   String getLatLong(Marker newMarker) {
     String lat = newMarker.point.latitude.toStringAsFixed(4);
@@ -94,7 +128,15 @@ class FormCubit extends Cubit<FormStates> {
             date: date,
             houseImages: images,
             houseLocation: locationController.text,
-            userId: userId);
+            userId: userId,
+            elec: elecGroupValue == "نعم" ? true : false,
+            furniture: furnitureGroupValue == "نعم" ? true : false,
+            kitchenCount: int.parse(kitchenController.text),
+            minRentPeriod: int.parse(minRentPeriodController.text),
+            roomsCount: int.parse(roomsController.text),
+            toiletCount: int.parse(toiletController.text),
+            water: waterGroupValue == "نعم" ? true : false,
+            wifi: wifiGroupValue == "نعم" ? true : false);
 
         await _firestore
             .collection("houses")

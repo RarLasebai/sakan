@@ -9,6 +9,16 @@ class HouseModel {
   String housePrice;
   String houseState;
   String date;
+  int roomsCount;
+  int toiletCount;
+  int kitchenCount;
+  int minRentPeriod;
+  int numberOfStars;
+  bool wifi;
+  bool elec;
+  bool furniture;
+  bool water;
+
   List houseImages;
 
   HouseModel(
@@ -22,6 +32,15 @@ class HouseModel {
       required this.houseLocation,
       required this.housePrice,
       this.houseState = "sent",
+      required this.elec,
+      required this.water,
+      required this.furniture,
+      required this.kitchenCount,
+      required this.minRentPeriod,
+      this.numberOfStars = 1,
+      required this.roomsCount,
+      required this.toiletCount,
+      required this.wifi,
       required this.userId});
 
   //from map
@@ -38,6 +57,15 @@ class HouseModel {
       houseLocation: map["houseLocation"] ?? "",
       housePrice: map["housePrice"] ?? "",
       houseState: map["houseState"] ?? "",
+      elec: map["elec"] ?? "",
+      furniture: map["furniture"] ?? "",
+      kitchenCount: map["kitchenCount"] ?? "",
+      minRentPeriod: map["minRentPeriod"] ?? "",
+      roomsCount: map["roomsCount"] ?? "",
+      toiletCount: map["toiletCount"] ?? "",
+      water: map["water"] ?? "",
+      wifi: map["wifi"] ?? "",
+      numberOfStars: map["numberOfStars"] ?? "",
     );
   }
 
@@ -55,6 +83,15 @@ class HouseModel {
       "houseLocation": houseLocation,
       "housePrice": housePrice,
       "houseState": houseState,
+      "elec": elec,
+      "furniture": furniture,
+      "kitchenCount": kitchenCount,
+      "minRentPeriod": minRentPeriod,
+      "roomsCount": roomsCount,
+      "toiletCount": toiletCount,
+      "water": water,
+      "wifi": wifi,
+      "numberOfStars": numberOfStars,
     };
   }
 }

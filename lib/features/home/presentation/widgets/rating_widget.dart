@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:sakan/core/utils/colors/colors.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 
 class RatingWidget extends StatelessWidget {
-  const RatingWidget({super.key});
+  final int stars;
+  const RatingWidget({required this.stars, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +18,8 @@ class RatingWidget extends StatelessWidget {
           const TxtStyle("الجودة", 14, Colors.black, FontWeight.bold),
           RatingBar.builder(
             ignoreGestures: true,
-            initialRating: 2,
+            initialRating: stars.toDouble(),
             // initialRating: studentModel.studentStars!.toDouble(),
-            minRating: 1,
             direction: Axis.horizontal,
             itemCount: 5,
             // itemPadding: EdgeInsets.symmetric(horizontal: 0.1),
