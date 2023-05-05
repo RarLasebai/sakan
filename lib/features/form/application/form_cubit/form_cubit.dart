@@ -148,7 +148,16 @@ class FormCubit extends Cubit<FormStates> {
           locationController.clear();
           descController.clear();
           colorsController.clear();
+          minRentPeriodController.clear();
+          roomsController.clear();
+          kitchenController.clear();
+          toiletController.clear();
           groupValue = "";
+          wifiGroupValue = "";
+          waterGroupValue = "";
+          furnitureGroupValue = "";
+          elecGroupValue = "";
+
           emit(FormSentSuccessfuly());
         });
       }
