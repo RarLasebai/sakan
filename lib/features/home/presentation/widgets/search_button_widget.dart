@@ -8,19 +8,17 @@ class SearchButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.r),
-        color: primary,
-      ),
-      child: const Padding(
-        padding: EdgeInsets.all(15),
-        child: ImageIcon(
-          AssetImage(
-            "assets/icons/search.png",
-          ),
-          color: Colors.white,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.r),
+          color: primary,
         ),
-      ),
-    );
+        child: const Padding(
+            padding: EdgeInsets.all(15),
+            child: ImageIcon(
+              AssetImage(
+                "assets/icons/search.png",
+              ),
+              color: Colors.white,
+            )));
   }
 }

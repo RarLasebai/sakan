@@ -39,7 +39,7 @@ class FormScreen extends StatelessWidget {
                 return const SuccessDialog();
               });
         }
-        if (state is FormErrorState) {
+        if (state is ManyRequestsState) {
           showToast(context, state.message);
         }
 
@@ -50,6 +50,9 @@ class FormScreen extends StatelessWidget {
           showToast(context, state.message);
         }
         if (state is HouseTypeErrorState) {
+          showToast(context, state.message);
+        }
+        if (state is ManyRequestsState) {
           showToast(context, state.message);
         }
       }, builder: (context, state) {

@@ -7,7 +7,6 @@ class FormRadioButtonChangedState extends FormStates {
   FormRadioButtonChangedState(this.message);
 }
 
-
 class HouseTypeErrorState extends FormStates {
   final String message;
   HouseTypeErrorState(this.message);
@@ -27,6 +26,11 @@ class PickingImageErrorState extends FormStates {
 
 class FormSentSuccessfuly extends FormStates {
   FormSentSuccessfuly();
+}
+
+class ManyRequestsState implements FormStates {
+  final String message;
+  ManyRequestsState(this.message);
 }
 
 class FormErrorState implements FormStates {

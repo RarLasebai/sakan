@@ -9,6 +9,7 @@ import 'package:sakan/core/utils/widgets/top_nav_bar.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 import 'package:sakan/features/home/application/searchCubit/search_cubit.dart';
 import 'package:sakan/features/home/application/searchCubit/search_states.dart';
+import 'package:sakan/features/home/presentation/widgets/filter_dialog.dart';
 import 'package:sakan/features/home/presentation/widgets/house_widget.dart';
 import 'package:sakan/features/home/presentation/widgets/search_button_widget.dart';
 
@@ -66,6 +67,13 @@ class SearchScreen extends StatelessWidget {
                           ),
                           GestureDetector(
                               onTap: () {
+                                // showDialog(
+                                //         context: context,
+                                //         builder: (context) => FilterDialog())
+                                //     .then((value) {
+                                //   searchCubit.filterSearch(
+                                //       value, searchCubit.allHouses!);
+                                // });
                                 if (searchCubit.searchFormKey.currentState!
                                     .validate()) {
                                   searchCubit.getSearchResult();

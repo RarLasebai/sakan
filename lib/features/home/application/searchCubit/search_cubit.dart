@@ -70,7 +70,29 @@ class SearchCubit extends Cubit<SearchStates> {
       emit(SearchResultEmptyState("لا توجد نتائج متطابقة!"));
     }
   }
+  void filterSearch(String filter, List allHouses) {
+  final sug = allHouses.where((house) {
+    final dynamic houseQuery;
+    if (filter == "cost") {
+      houseQuery = house.housePrice.toLowerCase();
+    } else if (filter == "toilet") {
+      houseQuery = int.parse(house.toiletCount);
+    } else if (filter == "kitchen") {
+      houseQuery = int.parse(house.kitchenCount);
+    } else if (filter == "rooms") {
+      houseQuery = int.parse(house.roomsCount);
+    } else {
+      houseQuery = house.houseArea.toLowerCase();
+    }
+
+    return houseQuery;
+  }).toList();
 }
+
+}
+
+
+// يختار لو كان على عدد المطابخ أو نوع الفلتر، وبناءً عليه يصير الريكويست وتطلع النتائج بعدين تصير الفلترة الثانية
 
 //check if string in number or not
 bool isNumericUsingRegularExpression(String string) {

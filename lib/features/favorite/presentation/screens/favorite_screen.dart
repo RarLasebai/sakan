@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sakan/core/utils/colors/colors.dart';
@@ -21,7 +20,6 @@ class FavoriteScreen extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           if (state is AuthGetUser) {
-
             return SafeArea(
               child: Padding(
                   padding: const EdgeInsets.only(left: 24, right: 24),
@@ -38,6 +36,8 @@ class FavoriteScreen extends StatelessWidget {
                         child: BlocConsumer<FavoriteCubit, FavoriteStates>(
                             listener: (context, state) {},
                             builder: (context, state) {
+                              FavoriteCubit favoriteCubit =
+                                  FavoriteCubit.get(context);
                               if (state is FavoriteHousesEmptyState) {
                                 return const Center(
                                   child: EmptyDataWidget(
@@ -56,7 +56,9 @@ class FavoriteScreen extends StatelessWidget {
                                                         builder: (context) =>
                                                             DetailsScreen(
                                                                 houseModel:
-                                                                    house)));
+                                                                    house))).then(
+                                                    (value) => favoriteCubit
+                                                        .getFavoriteHouses());
                                               },
                                               child: FavoriteHouseWidget(
                                                   houseModel: house)))

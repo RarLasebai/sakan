@@ -49,6 +49,7 @@ Future<String> storeFileToStorage(String ref, File file) async {
 
   return downloadUrl;
 }
+
 //---------------------------------------------------------
  String getHouseStatusInArabic(String engStatus) {
 /*

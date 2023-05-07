@@ -5,6 +5,8 @@
 <key>LSApplicationQueriesSchemes</key>
 <array>
   <string>tel</string>
+  <string>comgooglemaps</string>
+
 </array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
