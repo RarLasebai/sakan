@@ -49,6 +49,7 @@ dependencies:
   cloud_firestore: ^4.4.5
   flutter_spinkit: ^5.1.0
   fluttertoast: ^8.2.1
+  url_launcher: ^6.1.5
   image_picker: ^0.8.7+1
   firebase_storage: ^11.0.16
   conditional_builder_null_safety: ^0.0.6
@@ -56,6 +57,7 @@ dependencies:
   latlong2: ^0.8.1
   flutter_phone_direct_caller: ^2.1.1
   flutter_rating_bar: ^4.0.1
+  maps_launcher: ^2.2.0
 
 dev_dependencies:
   flutter_test:

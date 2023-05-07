@@ -62,8 +62,12 @@ class DetailsScreen extends StatelessWidget {
                                   Icons.location_on,
                                   color: primary,
                                 ),
-                                TxtStyle("الموقع: ${houseModel.houseLocation}",
-                                    12, darkGrey, FontWeight.normal,
+                                TxtStyle(
+                                    "عرض الخريطة كاملة: ${houseModel.houseLocation} ",
+                                    12,
+                                    darkGrey,
+                                    FontWeight.normal,
+                                    longText: true,
                                     textDecoration: TextDecoration.underline),
                               ],
                             ),
@@ -162,28 +166,22 @@ class DetailsScreen extends StatelessWidget {
                             children: [
                               PropsWidget(
                                   title: "أثاث \nالسكن",
-                                  subTitle: houseModel.furniture
-                                      ? "متوفر"
-                                      : "غير متوفر",
+                                  subTitle: houseModel.furniture ? "نعم" : "لا",
                                   icon: "f"),
                               SizedBox(width: 5.w),
                               PropsWidget(
                                   title: "اتصال \nإنترنت",
-                                  subTitle:
-                                      houseModel.wifi ? "متوفر" : "غير متوفر",
+                                  subTitle: houseModel.wifi ? "نعم" : "لا",
                                   icon: "wifi"),
                               SizedBox(width: 5.w),
                               PropsWidget(
                                   title: "فاتورة \nالمياه",
-                                  subTitle: houseModel.water
-                                      ? "مدفوعة"
-                                      : "غير مدفوعة",
+                                  subTitle: houseModel.water ? "نعم" : "لا",
                                   icon: "water"),
                               SizedBox(width: 5.w),
                               PropsWidget(
                                   title: "فاتورة\n الكهرباء",
-                                  subTitle:
-                                      houseModel.elec ? "مدفوعة" : "غير مدفوعة",
+                                  subTitle: houseModel.elec ? "نعم" : "لا",
                                   icon: "elec"),
                             ],
                           ),

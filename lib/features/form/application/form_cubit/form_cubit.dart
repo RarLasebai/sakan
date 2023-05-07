@@ -98,62 +98,98 @@ class FormCubit extends Cubit<FormStates> {
     return location;
   }
 
+  Future<bool> isManyRequests(String userId) async {
+    List<HouseModel> houses = [];
+    // print(userId);
+    QuerySnapshot query = await _firestore
+        .collection("houses")
+        .where("userId", isEqualTo: userId)
+        .where("houseState", isEqualTo: "sent")
+        .get();
+
+    if (query.docs.isNotEmpty) {
+      query.docs.map<List<HouseModel>>((e) {
+        final data = e.data() as Map<String, dynamic>;
+
+        final HouseModel houseModel = HouseModel.fromMap(data);
+        houses.add(houseModel);
+        return houses;
+      }).toList();
+    }
+    //limit for requests is just 2 only..
+    if (houses.length > 1) {
+      emit(ManyRequestsState(
+          "لقد وصلت للحد الأقصى، يمكنك المحاولة مجدداً عندما يتم تحديد حالة نماذجك السابقة"));
+
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   void saveHouseDataToFirebase(BuildContext context) async {
     emit(FormLoadingState());
-    try {
-      UserModel userModel = await getDataFromSharedPref();
-      final userId = userModel.userId;
-      // String newLocation = location;
-      //generating houseID
-      final houseId = _firestore.collection("houses").doc();
-      //upload images to firestore
-      images = await uploadImagesFunction(houseId.id);
+    UserModel userModel = await getDataFromSharedPref();
+    final userId = userModel.userId;
+    bool isManyRequest = await isManyRequests(userId);
+    if (isManyRequest == true) {
+      emit(ManyRequestsState(
+          "لقد وصلت للحد الأقصى، يمكنك المحاولة مجدداً عندما يتم تحديد حالة نماذجك السابقة"));
+      resetVariables();
+    } else {
+      try {
+        //generating houseID
+        final houseId = _firestore.collection("houses").doc();
+        //upload images to firestore
+        images = await uploadImagesFunction(houseId.id);
 
-      if (images.isEmpty) {
-        emit(PickingImageErrorState("حدث خطأ أثناء رفع الصور، حاول مجدداً"));
-      } else if (groupValue.isEmpty) {
-        emit(HouseTypeErrorState("من فضلك حدد نوع السكن!"));
-      } else {
-        DateTime today = DateTime.now();
-        String date = "${today.day}-${today.month}-${today.year}";
+        if (images.isEmpty) {
+          emit(PickingImageErrorState("حدث خطأ أثناء رفع الصور، حاول مجدداً"));
+        } else if (groupValue.isEmpty) {
+          emit(HouseTypeErrorState("من فضلك حدد نوع السكن!"));
+        } else if (furnitureGroupValue.isEmpty ||
+            elecGroupValue.isEmpty ||
+            waterGroupValue.isEmpty ||
+            wifiGroupValue.isEmpty) {
+          emit(HouseTypeErrorState(
+              "من فضلك أجب عن جميع الأسئلة المطروحة بالأسفل"));
+        } else {
+          DateTime today = DateTime.now();
+          String date = "${today.day}-${today.month}-${today.year}";
 
-        //set the model then save it to firebase cloud
-        HouseModel houseModel = HouseModel(
-            houseId: houseId.id,
-            houseArea: areaController.text,
-            houseColors: colorsController.text,
-            houseDesc: descController.text,
-            housePrice: priceController.text,
-            houseType: groupValue,
-            date: date,
-            houseImages: images,
-            houseLocation: locationController.text,
-            userId: userId,
-            elec: elecGroupValue == "نعم" ? true : false,
-            furniture: furnitureGroupValue == "نعم" ? true : false,
-            kitchenCount: int.parse(kitchenController.text),
-            minRentPeriod: int.parse(minRentPeriodController.text),
-            roomsCount: int.parse(roomsController.text),
-            toiletCount: int.parse(toiletController.text),
-            water: waterGroupValue == "نعم" ? true : false,
-            wifi: wifiGroupValue == "نعم" ? true : false);
+          //set the model then save it to firebase cloud
+          HouseModel houseModel = HouseModel(
+              houseId: houseId.id,
+              houseArea: areaController.text,
+              houseColors: colorsController.text,
+              houseDesc: descController.text,
+              housePrice: priceController.text,
+              houseType: groupValue,
+              date: date,
+              houseImages: images,
+              houseLocation: locationController.text,
+              userId: userId,
+              elec: elecGroupValue == "نعم" ? true : false,
+              furniture: furnitureGroupValue == "نعم" ? true : false,
+              kitchenCount: int.parse(kitchenController.text),
+              minRentPeriod: int.parse(minRentPeriodController.text),
+              roomsCount: int.parse(roomsController.text),
+              toiletCount: int.parse(toiletController.text),
+              water: waterGroupValue == "نعم" ? true : false,
+              wifi: wifiGroupValue == "نعم" ? true : false);
 
-        await _firestore
-            .collection("houses")
-            .doc(houseId.id)
-            .set(houseModel.toMap())
-            .then((value) {
-          priceController.clear();
-          areaController.clear();
-          locationController.clear();
-          descController.clear();
-          colorsController.clear();
-          groupValue = "";
-          emit(FormSentSuccessfuly());
-        });
+          await _firestore
+              .collection("houses")
+              .doc(houseId.id)
+              .set(houseModel.toMap())
+              .then((value) {
+            resetVariables();
+            emit(FormSentSuccessfuly());
+          });
+        }
+      } on FirebaseAuthException catch (e) {
+        emit(FormErrorState(e.toString()));
       }
-    } on FirebaseAuthException catch (e) {
-      emit(FormErrorState(e.toString()));
     }
   }
 
@@ -187,5 +223,22 @@ class FormCubit extends Cubit<FormStates> {
       print("url = $imageURL");
     }
     return imagesUrl;
+  }
+
+  void resetVariables() {
+    priceController.clear();
+    areaController.clear();
+    locationController.clear();
+    descController.clear();
+    colorsController.clear();
+    minRentPeriodController.clear();
+    roomsController.clear();
+    kitchenController.clear();
+    toiletController.clear();
+    groupValue = "";
+    wifiGroupValue = "";
+    waterGroupValue = "";
+    furnitureGroupValue = "";
+    elecGroupValue = "";
   }
 }

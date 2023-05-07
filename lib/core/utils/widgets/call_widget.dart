@@ -1,8 +1,11 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sakan/core/utils/colors/colors.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CallWidget extends StatelessWidget {
   final bool isPink;
@@ -13,7 +16,14 @@ class CallWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        FlutterPhoneDirectCaller.callNumber("0920090590");
+        Uri phoneno = Uri.parse('tel:+218920090590');
+        if (await canLaunchUrl(phoneno)) {
+          await launchUrl(phoneno);
+          print("opened");
+        } else {
+          FlutterPhoneDirectCaller.callNumber("0920090590");
+          print("dailer is not opened");
+        }
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
