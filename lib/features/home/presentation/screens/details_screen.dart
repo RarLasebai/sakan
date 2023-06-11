@@ -8,6 +8,7 @@ import 'package:sakan/core/utils/widgets/txt_style.dart';
 import 'package:sakan/features/form/data/model/house_model.dart';
 import 'package:sakan/features/home/presentation/screens/show_location_screen.dart';
 import 'package:sakan/features/home/presentation/widgets/house_slider.dart';
+import 'package:sakan/features/home/presentation/widgets/impression_widget.dart';
 import 'package:sakan/features/home/presentation/widgets/map_widget.dart';
 import 'package:sakan/features/home/presentation/widgets/props_widget.dart';
 import 'package:sakan/features/home/presentation/widgets/rating_widget.dart';
@@ -18,6 +19,7 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: SafeArea(
         child: Directionality(
@@ -78,7 +80,7 @@ class DetailsScreen extends StatelessWidget {
 
                         //rate
 
-                        RatingWidget(stars: houseModel.numberOfStars),
+                        RatingStarsWidget(stars: houseModel.numberOfStars),
                         Divider(),
                         //date
                         Padding(
@@ -213,11 +215,15 @@ class DetailsScreen extends StatelessWidget {
                                 )),
                           ],
                         ),
+
+                        //comments
+                        ImpressionWidget(houseModel: houseModel)
                       ],
                     ),
                   ),
                 ),
               ),
+
               SizedBox(
                 height: 4.h,
               ),

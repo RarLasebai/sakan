@@ -8,6 +8,7 @@ class UserModel {
   String userNationality;
   String userAddress;
   String userPhoto;
+  String? userToken;
   List? favHouses;
 
   UserModel(
@@ -19,6 +20,7 @@ class UserModel {
       required this.userMartialStatus,
       required this.userNationality,
       required this.userAddress,
+      this.userToken = "",
       this.favHouses = const ["fff"],
       this.userPhoto =
           "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"});
@@ -35,6 +37,7 @@ class UserModel {
         userNationality: map["userNationality"] ?? "",
         userAddress: map["userAddress"] ?? "",
         userPhoto: map["userPhoto"] ?? "",
+        userToken: map["userToken"] ?? "",
         favHouses:
             map['favHouses'] == null ? null : List.from(map['favHouses']));
   }
@@ -51,7 +54,8 @@ class UserModel {
       "userNationality": userNationality,
       "userMartialStatus": userMartialStatus,
       "userPhoto": userPhoto,
-      "favHouses": favHouses
+      "favHouses": favHouses,
+      "userToken": userToken
     };
   }
 }

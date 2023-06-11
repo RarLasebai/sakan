@@ -6,6 +6,11 @@ class ForgetPassInitialState extends ForgetPassStates {}
 
 class ForgetPassLoadingState extends ForgetPassStates {}
 
+class NotificationChangedState extends ForgetPassStates {}
+
+class TextChangedState extends ForgetPassStates {}
+class TokenChangedState extends ForgetPassStates {}
+
 class UserFoundState extends ForgetPassStates {
   UserModel userModel;
   UserFoundState(this.userModel);
@@ -23,6 +28,7 @@ class ForgetPassUserNotFoundState extends ForgetPassStates {}
 
 //user phone is exist and he entered a true otp = ForgetPassVerifiedState
 class ForgetPassVerifiedState extends ForgetPassStates {}
+
 class ForgetPassWrongOTpState extends ForgetPassStates {}
 
 class PasswordChangedSuccessState extends ForgetPassStates {}
@@ -33,5 +39,5 @@ class ForgetPassErrorState implements ForgetPassStates {
   final String message;
   ForgetPassErrorState(this.message);
 }
-class ForgetPassChangePassVisibiltyState extends ForgetPassStates {}
 
+class ForgetPassChangePassVisibiltyState extends ForgetPassStates {}

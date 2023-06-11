@@ -14,10 +14,8 @@ class SearchButtonWidget extends StatelessWidget {
         ),
         child: const Padding(
             padding: EdgeInsets.all(15),
-            child: ImageIcon(
-              AssetImage(
-                "assets/icons/search.png",
-              ),
+            child: Icon(
+              Icons.filter_alt_outlined,
               color: Colors.white,
             )));
   }

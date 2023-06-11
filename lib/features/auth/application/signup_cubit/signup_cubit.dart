@@ -69,6 +69,7 @@ class SignupCubit extends Cubit<SignupStates> {
           codeSent: (String verificationId, int? resendToken) async {
             emit(CodeSentSuccessState(verificationId));
           },
+          timeout: const Duration(seconds: 0),
           codeAutoRetrievalTimeout: (String verificationId) {});
     } on FirebaseAuthException catch (e) {
       emit(SignupErrorState(e.toString()));

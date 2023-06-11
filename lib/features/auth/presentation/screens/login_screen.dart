@@ -43,7 +43,7 @@ class LoginScreen extends StatelessWidget {
       }, builder: (context, state) {
         LoginCubit loginCubit = LoginCubit.get(context);
         return Scaffold(
-          // resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           body: Form(
             key: loginFormKey,
             child: Directionality(
@@ -56,9 +56,11 @@ class LoginScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset("assets/images/demo.png"),
+                    Image.asset(
+                      "assets/images/demo.png",
+                    ),
                     const Padding(
-                      padding: EdgeInsets.only(top: 30, bottom: 16),
+                      padding: EdgeInsets.only(bottom: 16),
                       child: Center(
                         child: TxtStyle(
                             "تسجيل الدخول", 18, Colors.black, FontWeight.bold),

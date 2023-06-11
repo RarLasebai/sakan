@@ -4,10 +4,13 @@ import 'package:sakan/core/utils/colors/colors.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 
 class HouseTypeWidget extends StatelessWidget {
-  final bool isSelected;
+  final bool isSelected, isFilter;
   final String title;
   const HouseTypeWidget(
-      {super.key, required this.isSelected, required this.title});
+      {super.key,
+      required this.isSelected,
+      required this.title,
+      this.isFilter = false});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +21,21 @@ class HouseTypeWidget extends StatelessWidget {
         decoration: BoxDecoration(
             color: isSelected ? primary : Colors.white,
             borderRadius: BorderRadius.circular(15.r),
-            border: Border.all(color: isSelected ? Colors.white : primary)),
+            border: Border.all(
+                color: isSelected
+                    ? Colors.white
+                    : isFilter
+                        ? darkGrey
+                        : primary)),
         child: Center(
-            child: TxtStyle(title, 16, isSelected ? Colors.white : primary,
+            child: TxtStyle(
+                title,
+                isFilter ? 13 : 16,
+                isSelected
+                    ? Colors.white
+                    : isFilter
+                        ? darkGrey
+                        : primary,
                 FontWeight.normal)),
       ),
     );

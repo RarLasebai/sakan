@@ -48,10 +48,16 @@ class SearchScreen extends StatelessWidget {
                             child: SizedBox(
                               height: 50.h,
                               child: CustomTextField(
-                                hint: "أدخل رقماً أو حرفاً..",
+                                hint: "ابدأ البحث..",
+                                isPrice: searchCubit.filter == "area" ||
+                                        searchCubit.filter == "type"
+                                    ? false
+                                    : true,
                                 controller: searchCubit.searchController,
                                 onChanged: ((text) => searchCubit.searchHouse(
-                                    text, searchCubit.allHouses!)),
+                                    text,
+                                    searchCubit.allHouses!,
+                                    searchCubit.filter)),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return "";
@@ -67,22 +73,26 @@ class SearchScreen extends StatelessWidget {
                           ),
                           GestureDetector(
                               onTap: () {
-                                // showDialog(
-                                //         context: context,
-                                //         builder: (context) => FilterDialog())
-                                //     .then((value) {
-                                //   searchCubit.filterSearch(
-                                //       value, searchCubit.allHouses!);
-                                // });
-                                if (searchCubit.searchFormKey.currentState!
-                                    .validate()) {
-                                  searchCubit.getSearchResult();
-                                }
+                                showDialog(
+                                        context: context,
+                                        builder: (context) => FilterDialog(
+                                            filter: searchCubit.filter))
+                                    .then((filter) {
+                                  searchCubit.filter = filter;
+                                  searchCubit.translateFilter(filter);
+                                  searchCubit.searchHouse(
+                                      searchCubit.searchController.text,
+                                      searchCubit.allHouses!,
+                                      filter);
+                                });
+                              
                               },
                               child: const SearchButtonWidget())
                         ],
                       ),
                     ),
+                    TxtStyle("البحث بناءً على ${searchCubit.arabicFilter}", 14,
+                        darkGrey, FontWeight.normal),
                     Expanded(
                       child: BlocBuilder<SearchCubit, SearchStates>(
                           builder: (context, state) {

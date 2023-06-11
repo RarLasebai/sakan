@@ -21,11 +21,6 @@ class ChangePasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController passwordController = TextEditingController();
-    TextEditingController confirmPasswordController = TextEditingController();
-
-    GlobalKey<FormState> changePasswordFormKey = GlobalKey<FormState>();
-
     return BlocProvider.value(
       value: BlocProvider.of<ForgetPassCubit>(context),
       child: BlocConsumer<ForgetPassCubit, ForgetPassStates>(
@@ -45,9 +40,9 @@ class ChangePasswordScreen extends StatelessWidget {
       }, builder: (context, state) {
         ForgetPassCubit forgetPassCubit = ForgetPassCubit.get(context);
         return Scaffold(
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           body: Form(
-            key: changePasswordFormKey,
+            key: forgetPassCubit.changePasswordFormKey,
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: Padding(
@@ -74,7 +69,7 @@ class ChangePasswordScreen extends StatelessWidget {
                         isPass: forgetPassCubit.isPassword,
                         suffixIcon: forgetPassCubit.suffixIcon,
                         suffixOnTap: forgetPassCubit.changePassVisibilty,
-                        controller: passwordController,
+                        controller: forgetPassCubit.passwordController,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "من فضلك لا تترك الحقل فارغاً";
@@ -90,12 +85,12 @@ class ChangePasswordScreen extends StatelessWidget {
                       isPass: forgetPassCubit.isPassword,
                       suffixIcon: forgetPassCubit.suffixIcon,
                       suffixOnTap: forgetPassCubit.changePassVisibilty,
-                      controller: confirmPasswordController,
+                      controller: forgetPassCubit.confirmPasswordController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "من فضلك لا تترك الحقل فارغاً";
-                        } else if (passwordController.text !=
-                            confirmPasswordController.text) {
+                        } else if (forgetPassCubit.passwordController.text !=
+                            forgetPassCubit.confirmPasswordController.text) {
                           return "كلمة المرور غير متطابقة";
                         } else {
                           return null;
@@ -112,11 +107,13 @@ class ChangePasswordScreen extends StatelessWidget {
                           return CustomButton(
                               text: "حفظ",
                               onTap: () {
-                                if (changePasswordFormKey.currentState!
+                                if (forgetPassCubit
+                                    .changePasswordFormKey.currentState!
                                     .validate()) {
                                   forgetPassCubit.changePass(
                                       userModel: userModel,
-                                      pass: passwordController.text);
+                                      pass: forgetPassCubit
+                                          .passwordController.text);
                                 }
                               });
                         })

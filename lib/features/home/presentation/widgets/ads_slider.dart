@@ -8,6 +8,7 @@ import 'package:sakan/core/utils/colors/colors.dart';
 import 'package:sakan/core/utils/widgets/loading_widget.dart';
 import 'package:sakan/features/home/application/bannersCubit/banners_cubit.dart';
 import 'package:sakan/features/home/application/bannersCubit/banners_states.dart';
+import 'package:sakan/features/home/presentation/screens/details_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class AdsSlider extends StatelessWidget {
@@ -35,7 +36,18 @@ class AdsSlider extends StatelessWidget {
                           itemCount: bannersCubit.imgList.length,
                           itemBuilder: (context, index, realIndex) {
                             final image = bannersCubit.imgList[index];
-                            return Image(image: AssetImage(image));
+                            return GestureDetector(
+                                onTap: () async {
+                                  final house =
+                                      await bannersCubit.getHouseFromImage(
+                                          bannersCubit.ids[index]);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => DetailsScreen(
+                                              houseModel: house)));
+                                },
+                                child: Image(image: NetworkImage(image)));
                           },
                           options: CarouselOptions(
                             onPageChanged: (index, reason) {

@@ -13,6 +13,14 @@ class LatestHousesLoadedState extends HomeStates {
   LatestHousesLoadedState({required this.houses});
 }
 
+class HouseImpressionUpdatedState extends HomeStates {
+  final int nCounter, sadCounter, smileCounter;
+  HouseImpressionUpdatedState(
+      {required this.nCounter,
+      required this.sadCounter,
+      required this.smileCounter});
+}
+
 class HouseWithTypeLoadingState implements HomeStates {}
 
 class HouseWithTypeLoadedState extends HomeStates {

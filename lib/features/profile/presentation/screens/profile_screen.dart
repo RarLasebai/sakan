@@ -104,7 +104,7 @@ class ProfileScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const RestorePasswordScreen(
+                                         RestorePasswordScreen(
                                           isProfile: true,
                                         )));
                           }),

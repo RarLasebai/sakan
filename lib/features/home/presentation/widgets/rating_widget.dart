@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:sakan/core/utils/widgets/txt_style.dart';
 
-class RatingWidget extends StatelessWidget {
+class RatingStarsWidget extends StatelessWidget {
   final int stars;
-  const RatingWidget({required this.stars, super.key});
+  const RatingStarsWidget({required this.stars, super.key});
 
   @override
   Widget build(BuildContext context) {

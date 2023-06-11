@@ -16,6 +16,8 @@ class SearchCubit extends Cubit<SearchStates> {
   TextEditingController searchController = TextEditingController();
   GlobalKey<FormState> searchFormKey = GlobalKey<FormState>();
   List? allHouses;
+  String filter = "area";
+  String arabicFilter = "المنطقة";
   //Methods
   getSearchResult({var searchWord}) async {
     QuerySnapshot query;
@@ -51,15 +53,27 @@ class SearchCubit extends Cubit<SearchStates> {
   }
 
   //suggestions
-  void searchHouse(String query, List allHouses) {
+  void searchHouse(String query, List allHouses, String filter) {
     final bool isNumber = isNumericUsingRegularExpression(query);
     print(isNumber);
     final sug = allHouses.where((house) {
       final dynamic houseQuery;
       if (isNumber == true) {
-        houseQuery = house.housePrice.toLowerCase();
-      } else {
+        if (filter == "kitchen") {
+          houseQuery = house.kitchenCount.toString();
+        } else if (filter == "toilet") {
+          houseQuery = house.toiletCount.toString();
+        } else if (filter == "stars") {
+          houseQuery = house.numberOfStars.toString();
+        } else if (filter == "rooms") {
+          houseQuery = house.roomsCount.toString();
+        } else {
+          houseQuery = house.housePrice.toLowerCase();
+        }
+      } else if (filter == "area") {
         houseQuery = house.houseArea.toLowerCase();
+      } else {
+        houseQuery = house.houseType.toLowerCase();
       }
       final input = query.toLowerCase();
       return houseQuery.contains(input);
@@ -70,27 +84,26 @@ class SearchCubit extends Cubit<SearchStates> {
       emit(SearchResultEmptyState("لا توجد نتائج متطابقة!"));
     }
   }
-  void filterSearch(String filter, List allHouses) {
-  final sug = allHouses.where((house) {
-    final dynamic houseQuery;
+
+  void translateFilter(String filter) {
     if (filter == "cost") {
-      houseQuery = house.housePrice.toLowerCase();
+      arabicFilter = "السعر";
     } else if (filter == "toilet") {
-      houseQuery = int.parse(house.toiletCount);
+      arabicFilter = "عدد الحمامات";
     } else if (filter == "kitchen") {
-      houseQuery = int.parse(house.kitchenCount);
+      arabicFilter = "عدد المطابخ";
     } else if (filter == "rooms") {
-      houseQuery = int.parse(house.roomsCount);
+      arabicFilter = "عدد الغرف";
+    } else if (filter == "stars") {
+      arabicFilter = "عدد النجوم";
+    } else if (filter == "type") {
+      arabicFilter = "النوع";
     } else {
-      houseQuery = house.houseArea.toLowerCase();
+      arabicFilter = "المنطقة";
     }
-
-    return houseQuery;
-  }).toList();
+    emit(SearchFilterChangedState());
+  }
 }
-
-}
-
 
 // يختار لو كان على عدد المطابخ أو نوع الفلتر، وبناءً عليه يصير الريكويست وتطلع النتائج بعدين تصير الفلترة الثانية
 

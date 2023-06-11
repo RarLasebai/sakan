@@ -24,7 +24,7 @@ class RolesScreen extends StatelessWidget {
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       // fit: BoxFit.fill,
-                      image: AssetImage("assets/images/logo.png"),
+                      image: AssetImage("assets/images/demo.png"),
                     ),
                   ),
                 ),
@@ -33,7 +33,7 @@ class RolesScreen extends StatelessWidget {
                   width: 316.w,
                   child: const TxtStyle(
                     '''
-تطبيق سكن هو ملك لشركة سكن للإيجار غرضه الوحيد تسهيل عمليات البحث عن سكن وعرض سكن للإيجار.  سواءً كنت مؤجراً أو مستأجراً، أثناء استخدامك للتطبيق تأكد بأننا نسعى لتحقيق أفضل ما يمكننا لنحصل على رضاك، لهذا إن كان هناك ما تقترحه علينا لا تتردد بذلك.''',
+تطبيق سكن هو ملك لشركة سكن للإيجار غرضه الوحيد تسهيل عمليات البحث عن سكن وعرض سكن للإيجار. سواءً كنت مؤجراً أو مستأجراً، أثناء استخدامك للتطبيق تأكد بأننا نسعى لتحقيق أفضل ما يمكننا لنحصل على رضاك، لهذا إن كان هناك ما تقترحه علينا لا تتردد بذلك.''',
                     12,
                     darkGrey,
                     FontWeight.normal,

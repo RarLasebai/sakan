@@ -3,9 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:sakan/core/utils/colors/colors.dart';
-import 'package:sakan/core/utils/functions/utils_functios.dart';
 import 'package:sakan/core/utils/widgets/custom_button.dart';
-import 'package:sakan/core/utils/widgets/txt_style.dart';
 
 import '../../../../core/utils/widgets/top_nav_bar.dart';
 

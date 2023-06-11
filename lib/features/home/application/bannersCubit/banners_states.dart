@@ -7,8 +7,8 @@ class BannersLoadingState implements BannersStates {}
 class BannerChangeState extends BannersStates {}
 
 class BannersLoadedState extends BannersStates {
-  List<String> imgList;
-  BannersLoadedState(this.imgList);
+  List imgList, ids;
+  BannersLoadedState({required this.imgList, required this.ids});
 }
 
 // class HouseImagesLoadingState extends BannersStates {}

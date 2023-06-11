@@ -32,15 +32,12 @@ class RestorePassOtpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> otpFormKey = GlobalKey<FormState>();
-    TextEditingController otpController = TextEditingController();
-
     return BlocProvider.value(
       value: BlocProvider.of<ForgetPassCubit>(context),
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         body: Form(
-          key: otpFormKey,
+          key: forgetPassCubit.otpFormKey,
           child: Directionality(
             textDirection: TextDirection.rtl,
             child: Padding(
@@ -67,7 +64,8 @@ class RestorePassOtpScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 40),
                     child: Center(
-                        child: PinputWidget(otpController: otpController)),
+                        child: PinputWidget(
+                            otpController: forgetPassCubit.otpController)),
                   ),
                   BlocConsumer<ForgetPassCubit, ForgetPassStates>(
                       listener: (context, state) {
@@ -95,9 +93,11 @@ class RestorePassOtpScreen extends StatelessWidget {
                       return CustomButton(
                           text: "تحقق",
                           onTap: () {
-                            if (otpFormKey.currentState!.validate()) {
+                            if (forgetPassCubit.otpFormKey.currentState!
+                                .validate()) {
                               forgetPassCubit.verfiyOtp(
-                                otp: otpController.text.toString(),
+                                otp: forgetPassCubit.otpController.text
+                                    .toString(),
                                 verificationId: verificationId,
                               );
                             }
@@ -111,7 +111,7 @@ class RestorePassOtpScreen extends StatelessWidget {
                     onTap: () {
                       forgetPassCubit.verfiyPhone(
                           phone: userModel.userPhone, user: userModel);
-                      otpController.clear();
+                      forgetPassCubit.otpController.clear();
                     },
                     child: const TxtStyle(
                       "إعادة إرسال الرمز؟",

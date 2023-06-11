@@ -21,7 +21,9 @@ class HomeCubit extends Cubit<HomeStates> {
   int currentIndex = 0;
   int? selectedIndex = 0;
   var fav = Colors.white;
-
+  int? nCounter;
+  int? sadCounter;
+  int? smileCounter;
   List houseTypes = [
     "شقة",
     "منزل أرضي",
@@ -139,6 +141,49 @@ class HomeCubit extends Cubit<HomeStates> {
         UserModel user = UserModel.fromMap(data);
         await storeDataLocally(user);
       });
+    } catch (e) {
+      emit(HomeErrorState(e.toString()));
+    }
+  }
+
+  Future<HouseModel> getHouse(String houseId) async {
+    DocumentSnapshot<Map<String, dynamic>> house =
+        await _firestore.collection("houses").doc(houseId).get();
+    HouseModel h = HouseModel.fromMap(house.data()!);
+    sadCounter = h.sadCount;
+    smileCounter = h.smileCount;
+    nCounter = h.neutralCount;
+    return h;
+  }
+
+  Future impressionUpdate(
+      {required HouseModel houseModel, required int value}) async {
+    String fieldName = "smileCount";
+    int counter = 0;
+    if (value > 0 && value < 3) {
+      fieldName = "sadCount";
+      sadCounter = sadCounter! + 1;
+      counter = sadCounter!;
+    } else if (value == 3) {
+      fieldName = "neutralCount";
+      nCounter = nCounter! + 1;
+      counter = nCounter!;
+    } else {
+      fieldName = "smileCount";
+      smileCounter = smileCounter! + 1;
+      counter = smileCounter!;
+    }
+    try {
+      emit(HomeLoadingState());
+
+      await _firestore
+          .collection("houses")
+          .doc(houseModel.houseId)
+          .update({fieldName: counter});
+      emit(HouseImpressionUpdatedState(
+          nCounter: nCounter!,
+          sadCounter: sadCounter!,
+          smileCounter: smileCounter!));
     } catch (e) {
       emit(HomeErrorState(e.toString()));
     }
